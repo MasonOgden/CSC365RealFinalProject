@@ -1,0 +1,8 @@
+public class Book {
+    private int id;
+    private String image_link;
+    private String title;
+    private String author;
+    private int num_copies;
+    private String category;
+}

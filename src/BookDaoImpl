@@ -1,0 +1,47 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
+
+public class BookDaoImpl implements Dao<Book> {
+    private Connection conn;
+
+    public BookDaoImpl(Connection conn) {
+        this.conn = conn;
+    }
+
+    public Book getById(int id) {
+        Book book = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE id=?");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            Set<Book> books = unpackResultSet(resultSet);
+            book = (Book)books.toArray()[0];
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return book;
+    }
+}
