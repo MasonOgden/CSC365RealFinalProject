@@ -3,6 +3,7 @@ import java.sql.SQLException;
 
 public class DaoManager {
     // Toshi's url: jdbc:mysql://csc365.toshikuboi.net:3306/tkuboi
+    // My attempted url: csc365.toshikuboi.net
     protected ConnectionFactory connectionFactory = null;
     protected Connection conn = null;
 
