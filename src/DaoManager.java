@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DaoManager {
+    // Toshi's url: jdbc:mysql://csc365.toshikuboi.net:3306/tkuboi
     protected ConnectionFactory connectionFactory = null;
     protected Connection conn = null;
 
@@ -56,6 +57,20 @@ public class DaoManager {
             }
         }
         return null;
+    }
+
+    public Object executeAndClose(DaoCommand command) {
+        try {
+            return command.execute(this);
+        }
+        finally {
+            try {
+                this.getConnection().close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Object transactionAndClose(final DaoCommand command) {

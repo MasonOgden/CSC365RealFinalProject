@@ -30,5 +30,11 @@ public class Main {
                 System.out.println(book);
             }
         }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
