@@ -3,7 +3,7 @@ public class Book {
     private String image_link;
     private String title;
     private String author;
-    private int num_copies;
+    private int numCopies;
     private String category;
 
     public Book(int id, String image_link, String title, String author, int num_copies, String category) {
@@ -11,12 +11,12 @@ public class Book {
         this.image_link = image_link;
         this.title = title;
         this.author = author;
-        this.num_copies = num_copies;
+        this.numCopies = num_copies;
         this.category = category;
     }
 
     public String toString() {
-        return "id: " + id + ", title: " + title + ", author: " + author + ", number of copies: " + num_copies + ", category: " + category;
+        return "id: " + id + ", title: " + title + ", author: " + author + ", number of copies: " + numCopies + ", category: " + category;
     }
 
     public String getImageLink() {
@@ -32,7 +32,7 @@ public class Book {
     }
 
     public int getNumCopies() {
-        return num_copies;
+        return numCopies;
     }
 
     public String getCategory() {
