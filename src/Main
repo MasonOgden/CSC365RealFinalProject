@@ -1,5 +1,26 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.Set;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world");
+        String credFile = args[0];
+        Properties prop = new Properties();
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(credFile);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            prop.loadFromXML(fis);
+            DaoManager daoManager = new DaoManager(new ConnectionFactory(
+                    prop.getProp
+            ))
+        }
     }
 }
