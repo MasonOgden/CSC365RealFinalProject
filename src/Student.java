@@ -1,5 +1,5 @@
 public class Student {
-    private boolean gradStudent;
+    private String studentType;
     private int id;
 
     //Not sure if we need these
@@ -11,23 +11,19 @@ public class Student {
     //but that would produce duplicate information
 
 
-    public Student(boolean gradStudent, int id, int firstName, int lastName) {
-        this.gradStudent = gradStudent;
+    public Student(String studentType, int id, int firstName, int lastName) {
+        this.studentType = studentType;
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     public String toString() {
-        String studentType = "undergraduate";
-        if (gradStudent) {
-            studentType = "graduate";
-        }
         return studentType + " student, id: " + id + ", first name: " + firstName + ", last name: " + lastName;
     }
 
-    public boolean isGradStudent() {
-        return gradStudent;
+    public String isGradStudent() {
+        return studentType;
     }
 
     public int getId() {

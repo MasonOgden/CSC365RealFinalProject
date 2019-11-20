@@ -108,7 +108,6 @@ public class BookDaoImpl implements Dao<Book> {
 
         while (rs.next()) {
             Book book = new Book(
-                    rs.getInt("id"),
                     rs.getString("image_link"),
                     rs.getString("title"),
                     rs.getString("author"),
