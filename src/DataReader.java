@@ -15,7 +15,7 @@ public class DataReader {
         }
         else {
             // values[1] + ", " + values[2] + ", " + values[3] + ", " + values[4]
-            if (values.length == 4) {
+            if (values.length == 2) {
                 System.out.println(line);
             }
             String numCopiesString = values[5];
@@ -45,8 +45,8 @@ public class DataReader {
         throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter(filename, "UTF-8");
         for (Book book : listOfBooks) {
-            writer.println("INSERT INTO Book (image_link, title, author, numCopies, category) VALUES (" + book.getImageLink() + ", " +
-                    book.getTitle() + ", " + book.getAuthor() + ", " + book.getNumCopies() + ", " + book.getCategory() + ");");
+            writer.println("INSERT INTO Book (image_link, title, author, numCopies, category) VALUES (\"" + book.getImageLink() + "\", \"" +
+                    book.getTitle() + "\", \"" + book.getAuthor() + "\", " + book.getNumCopies() + ", \"" + book.getCategory() + "\");");
         }
         writer.close();
     }
