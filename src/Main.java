@@ -25,6 +25,7 @@ public class Main {
         }
         // Read in data from .csv file
         try {
+            // Problem right now is that a title has commas in it, which is messing up my split function.
             dataReader.populateListOfBooks(dataFile, listOfBooks);
         }
         catch (FileNotFoundException e) {

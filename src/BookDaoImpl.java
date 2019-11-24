@@ -84,12 +84,11 @@ public class BookDaoImpl implements Dao<Book> {
     public boolean update(Book object) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "UPDATE Book SET image_link=?, title=?, author=?, num_copies=?, category=? WHERE id=?");
-            preparedStatement.setString(1, object.getImageLink());
-            preparedStatement.setString(2, object.getTitle());
-            preparedStatement.setString(3, object.getAuthor());
-            preparedStatement.setInt(4, object.getNumCopies());
-            preparedStatement.setString(5, object.getCategory());
+                    "UPDATE Book SET title=?, author=?, num_copies=?, category=? WHERE id=?");
+            preparedStatement.setString(1, object.getTitle());
+            preparedStatement.setString(2, object.getAuthor());
+            preparedStatement.setInt(3, object.getNumCopies());
+            preparedStatement.setString(4, object.getCategory());
             preparedStatement.execute();
         }
         catch (SQLException e) {
@@ -108,7 +107,6 @@ public class BookDaoImpl implements Dao<Book> {
 
         while (rs.next()) {
             Book book = new Book(
-                    rs.getString("image_link"),
                     rs.getString("title"),
                     rs.getString("author"),
                     rs.getInt("numCopies"),

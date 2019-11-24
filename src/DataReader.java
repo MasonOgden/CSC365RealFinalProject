@@ -8,22 +8,20 @@ import java.util.Scanner;
 public class DataReader {
 
     public void processLine(final String line, List<Book> listOfBooks) {
-        final String[] values = line.split(",");
+        final String[] values = line.split("\t");
 
-        if (values.length == 0 || values.length > 7) {
-            return;
-        }
-        else {
-            // values[1] + ", " + values[2] + ", " + values[3] + ", " + values[4]
-            if (values.length == 2) {
-                System.out.println(line);
+        if (values.length == 3) {
+            for (int i = 0; i <values.length; i++) {
+                System.out.print(i + ": " + values[i] + ", ");
+
             }
-            String numCopiesString = values[5];
-            String numCopies = numCopiesString.replaceAll("\"", "");
-            Book newBook = new Book(values[2], values[3], values[4],
-                                    Integer.parseInt(numCopies), values[6]);
-            listOfBooks.add(newBook);
         }
+        System.out.println("");
+        String numCopiesString = values[3];
+        String numCopies = numCopiesString.replaceAll("\"", "");
+        Book newBook = new Book(values[1], values[2],
+                                Integer.parseInt(numCopies), values[4]);
+        listOfBooks.add(newBook);
     }
 
     public void processFile(Scanner input, List<Book> listOfBooks) {
@@ -45,7 +43,7 @@ public class DataReader {
         throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter(filename, "UTF-8");
         for (Book book : listOfBooks) {
-            writer.println("INSERT INTO Book (image_link, title, author, numCopies, category) VALUES (\"" + book.getImageLink() + "\", \"" +
+            writer.println("INSERT INTO Book (image_link, title, author, numCopies, category) VALUES (\"" +
                     book.getTitle() + "\", \"" + book.getAuthor() + "\", " + book.getNumCopies() + ", \"" + book.getCategory() + "\");");
         }
         writer.close();
