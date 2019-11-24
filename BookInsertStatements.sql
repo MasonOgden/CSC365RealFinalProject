@@ -1,0 +1,1 @@
+INSERT INTO Book (image_link, title, author, numCopies, category) VALUES ("a.jpg", "title", "author", 3, "Fiction");
