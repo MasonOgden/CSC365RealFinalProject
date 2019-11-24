@@ -14,7 +14,7 @@ public class Main {
         DataReader dataReader = new DataReader();
         String credFile = args[0];
         String dataFile = args[1];
-        //String statementFile = args[2];
+        String statementFile = args[2];
         Properties prop = new Properties();
         FileInputStream fis = null;
         try {
@@ -31,12 +31,12 @@ public class Main {
             System.err.println(e.getMessage());
         }
         // Write the SQL INSERT statements to a file
-        /*try {
+        try {
             dataReader.writeBookStatementsOut(statementFile, listOfBooks);
         }
         catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
-        }*/
+        }
         // Test that connection is working by printing out every book in the database
         try {
             prop.loadFromXML(fis);

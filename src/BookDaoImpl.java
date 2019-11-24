@@ -111,7 +111,7 @@ public class BookDaoImpl implements Dao<Book> {
                     rs.getString("image_link"),
                     rs.getString("title"),
                     rs.getString("author"),
-                    rs.getInt("num_copies"),
+                    rs.getInt("numCopies"),
                     rs.getString("category")
             );
             books.add(book);
