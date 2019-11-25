@@ -1,6 +1,36 @@
 import java.util.Date;
 
 public class Reservation {
-    private int book_id;
-    private Date reservation_date;
+    private int studentId;
+    private int bookId;
+    private Date startDate;
+    private Date endDate;
+    private boolean checkedOut = false;
+
+    public Reservation(int studentId, int bookId, Date startDate, Date endDate) {
+        this.studentId = studentId;
+        this.bookId = bookId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        this.checkedOut = checkedOut;
+    }
 }

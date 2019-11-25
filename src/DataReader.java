@@ -8,15 +8,17 @@ import java.util.Scanner;
 public class DataReader {
 
     public void processLine(final String line, List<Book> listOfBooks) {
+        int j = 0;
         final String[] values = line.split("\t");
 
-        if (values.length == 3) {
+        if (values.length < 5) {
             for (int i = 0; i <values.length; i++) {
                 System.out.print(i + ": " + values[i] + ", ");
 
             }
+            System.out.println("");
         }
-        System.out.println("");
+
         String numCopiesString = values[3];
         String numCopies = numCopiesString.replaceAll("\"", "");
         Book newBook = new Book(values[1], values[2],
