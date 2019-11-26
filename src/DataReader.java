@@ -28,6 +28,8 @@ public class DataReader {
 
     public void processFile(Scanner input, List<Book> listOfBooks) {
         while (input.hasNextLine()) {
+            //hasNextResult attribute of Scanner input is messing up, saying that the line ends
+            // at R rather than the actual end of the line. Not sure why.
             processLine(input.nextLine(), listOfBooks);
         }
     }
@@ -45,7 +47,7 @@ public class DataReader {
         throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter(filename, "UTF-8");
         for (Book book : listOfBooks) {
-            writer.println("INSERT INTO Book (image_link, title, author, numCopies, category) VALUES (\"" +
+            writer.println("INSERT INTO Book (title, author, numCopies, category) VALUES (\"" +
                     book.getTitle() + "\", \"" + book.getAuthor() + "\", " + book.getNumCopies() + ", \"" + book.getCategory() + "\");");
         }
         writer.close();

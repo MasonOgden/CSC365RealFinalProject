@@ -39,7 +39,7 @@ public class Main {
             e.printStackTrace();
         }
         // Test that connection is working by printing out every book in the database
-        try {
+        /*try {
             prop.loadFromXML(fis);
             DaoManager daoManager = new DaoManager(new ConnectionFactory(
                     prop.getProperty("driver"),
@@ -58,6 +58,6 @@ public class Main {
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

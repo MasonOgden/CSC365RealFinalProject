@@ -1,0 +1,54 @@
+---
+title: "CreateInsertStatements"
+author: "Mason Ogden"
+date: "November 25, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+CHANGE THESE FOR YOUR COMPUTER:
+```{r variables}
+# CSV data file path:
+path <- "C:/Users/mogde/Desktop/Git Repositories/CSC365/CSC365RealFinalProject/book32-listing-small.csv"
+
+# TXT file to be written to:
+out_path <- "C:/Users/mogde/Desktop/Git Repositories/CSC365/CSC365RealFinalProject/BookInsertStatements.sql"
+```
+
+
+Load packages:
+```{r packages}
+library(tidyverse)
+```
+
+Read in data and define column names:
+```{r read in data}
+my.data <- read.csv(path, header=FALSE)
+names(my.data) <- c("id_num", "title", "author", "num_copies", "category")
+```
+
+Open output file and write insert statements to it:
+```{r write to file}
+out_file <- file(
+  description = out_path,
+  open="wt")
+  
+
+beginning <- "INSERT INTO Book (title, author, numCopies, category) VALUES (\""
+
+for (i in 1:nrow(my.data)) {
+  title <- my.data[i, "title"]
+  author <- my.data[i, "author"]
+  num_copies <- as.integer(my.data[i, "num_copies"])
+  category <- my.data[i, "category"]
+  
+  
+  line <- str_c(beginning, title, "\", \"", author, "\", ", num_copies, ", \"", category, "\");")
+  writeLines(line, out_file)
+}
+close(out_file, type="wt")
+```
+
