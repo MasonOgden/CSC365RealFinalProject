@@ -13,8 +13,8 @@ public class Main {
         List<Book> listOfBooks = new ArrayList<Book>();
         DataReader dataReader = new DataReader();
         String credFile = args[0];
-        String dataFile = args[1];
-        String statementFile = args[2];
+        //String dataFile = args[1];
+        //String statementFile = args[2];
         Properties prop = new Properties();
         FileInputStream fis = null;
         try {
@@ -24,7 +24,7 @@ public class Main {
             e.printStackTrace();
         }
         // Read in data from .csv file
-        try {
+        /*try {
             // Problem right now is that a title has commas in it, which is messing up my split function.
             dataReader.populateListOfBooks(dataFile, listOfBooks);
         }
@@ -37,9 +37,9 @@ public class Main {
         }
         catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
+        }*/
         // Test that connection is working by printing out every book in the database
-        /*try {
+        try {
             prop.loadFromXML(fis);
             DaoManager daoManager = new DaoManager(new ConnectionFactory(
                     prop.getProperty("driver"),
@@ -58,6 +58,6 @@ public class Main {
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
