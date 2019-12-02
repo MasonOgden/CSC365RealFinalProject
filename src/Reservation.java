@@ -5,7 +5,7 @@ public class Reservation {
     private int bookId;
     private Date startDate;
     private Date endDate;
-    private boolean checkedOut = false;
+    private boolean fulfilled = false;
 
     public Reservation(int studentId, int bookId, Date startDate, Date endDate) {
         this.studentId = studentId;
@@ -30,7 +30,7 @@ public class Reservation {
         return endDate;
     }
 
-    public void setCheckedOut(boolean checkedOut) {
-        this.checkedOut = checkedOut;
+    public void setFulfilled(boolean fulfilled) {
+        this.fulfilled = fulfilled;
     }
 }

@@ -4,7 +4,9 @@ public class Checkout {
     private int studentId;
     private int bookId;
     private Date startDate;
+    private Date returnDate = null;
     private Date dueBack;
+    private boolean ddExtended = false;
 
     public Checkout(int studentId, int bookId, Date startDate, Date dueBack) {
         this.studentId = studentId;
@@ -27,5 +29,13 @@ public class Checkout {
 
     public Date getDueBack() {
         return dueBack;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public void extendDueDate(boolean ddExtended) {
+        this.ddExtended = ddExtended;
     }
 }
