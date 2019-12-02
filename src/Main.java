@@ -24,10 +24,18 @@ public class Main {
                     prop.getProperty("user"),
                     prop.getProperty("pass")
             ));
+            // Printing out all books currently in the database
             Dao<Book> bookDao = daoManager.getBookDao();
             Set<Book> books = bookDao.getAll();
             for (Book book : books) {
                 System.out.println(book);
+            }
+
+            // Printing out all students currently in the database
+            Dao<Student> studentDao = daoManager.getStudentDao();
+            Set<Student> students = studentDao.getAll();
+            for (Student student : students) {
+                System.out.print(student);
             }
         }
         catch (IOException e) {

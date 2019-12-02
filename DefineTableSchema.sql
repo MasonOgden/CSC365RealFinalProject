@@ -7,38 +7,15 @@ create table if not exists Book (
 );
 
 create table if not exists Student (
-	gradStudent boolean not null default false,
+	studentType char(1) not null,
     id int auto_increment primary key,
     firstName varchar(15) not null,
     lastName varchar(25) not null
 );
 
-create table if not exists Reservation (
-	studentId int not null,
-    bookId int not null,
-    startDate date not null,
-    endDate date not null,
-    checkedOut boolean default false,
-    primary key (studentId, bookId, startDate),
-    foreign key (studentId) references Student (id),
-    foreign key (bookId) references Book (id)
-);
+drop table Book;
+drop table Student;
 
-create table if not exists Checkout (
-	studentId int not null,
-    bookId int not null,
-    startDate date not null,
-    dueBack date not null,
-    primary key (studentId, bookId, startDate),
-    foreign key (studentId) references Student (id),
-    foreign key (bookId) references Book (id)
-);
-
-create table if not exists StudentType (
-	name varchar(10) not null
-);
-
-
-
-# Test insert to make sure Java is connecting to server
-#INSERT INTO Book (title, author, numCopies, category) VALUES ("test title", "test author", 3, "Category");
+# Test insert statements
+insert into Book (title, author, numCopies, category) values ("test title", "test author", 3, "fiction");
+insert into Student (studentType, firstName, lastName) values ("u", "Mason", "Ogden");
