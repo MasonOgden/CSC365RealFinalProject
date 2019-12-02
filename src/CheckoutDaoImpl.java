@@ -13,6 +13,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return null;
     }
 
+    // Returns all current checkouts of the student
     public Set<Checkout> getActiveByStudentId(int id) {
         Set<Checkout> checkouts = null;
         PreparedStatement preparedStatement = null;
@@ -20,6 +21,40 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
 
         try {
             preparedStatement = this.conn.prepareStatement("SELECT * FROM Checkout WHERE studentId = ? AND dayReturned is null");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            checkouts = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return checkouts;
+    }
+
+    // Returns all past checkouts by the student
+    public Set<Checkout> getInactiveByStudentId(int id) {
+        Set<Checkout> checkouts = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Checkout WHERE studentId = ? AND dayReturned is not null");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             checkouts = unpackResultSet(resultSet);
@@ -82,6 +117,24 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return false;
     }
 
+    public boolean extendReturnDate(int studentId, int bookId, int numDays) {
+        // This method needs to take into account whether someone else has reserved it already.
+        // Can't extend a checkout on a book if someone else has a reservation for it. Need to implement that.
+        try {
+            PreparedStatement preparedStatement = this.conn.prepareStatement(
+                    "UPDATE Checkout SET dueBack = DATE_ADD(dueBack, INTERVAL ? DAY), ddExtended = true WHERE studentId=? AND bookId = ?");
+            preparedStatement.setInt(1, numDays);
+            preparedStatement.setInt(2, studentId);
+            preparedStatement.setInt(3, bookId);
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public boolean update(Checkout object) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
@@ -113,7 +166,8 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
                     rs.getInt("studentId"),
                     rs.getInt("bookId"),
                     rs.getDate("startDate"),
-                    rs.getDate("dueBack")
+                    rs.getDate("dueBack"),
+                    rs.getBoolean("ddExtended")
             );
             checkouts.add(checkout);
         }

@@ -8,19 +8,29 @@ public class Checkout {
     private Date dueBack;
     private boolean ddExtended = false;
 
-    public Checkout(int studentId, int bookId, Date startDate, Date dueBack) {
+    public Checkout(int studentId, int bookId, Date startDate, Date dueBack, boolean ddExtended) {
         this.studentId = studentId;
         this.bookId = bookId;
         this.startDate = startDate;
         this.dueBack = dueBack;
+        this.ddExtended = ddExtended;
     }
 
     public String toString() {
         String returned = " not";
+        String extended = " not";
         if (returnDate != null) {
             returned = "";
         }
-        return "On " + startDate + ", student with ID " + studentId + " checked out book with ID " + bookId + ", which is due back on " + dueBack + ". This book has" + returned + " been returned.";
+        if (ddExtended) {
+            extended = "";
+        }
+        return "On " + startDate + ", student with ID "
+                + studentId + " checked out book with ID "
+                + bookId + ", which is due back on "
+                + dueBack + ". This book has" + returned +
+                " been returned. The return date has"
+                + extended + " been extended";
     }
 
     public int getStudentId() {

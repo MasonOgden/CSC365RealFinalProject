@@ -1,24 +1,3 @@
-create table if not exists Checkout (
-	studentId int not null,
-    bookId int not null,
-    startDate date not null,
-    dayReturned date default null,
-    dueBack date not null,
-    ddExtended boolean not null default false,
-    foreign key (studentId) references Student (id),
-    foreign key (bookId) references Book (id)
-);
-
-create table if not exists Reservation (
-	studentId int not null,
-    bookId int not null,
-    startDate date not null,
-    endDate date not null,
-    fulfilled boolean not null default false,
-    foreign key (studentId) references Student (id),
-    foreign key (bookId) references Book (id)
-);
-
 create table if not exists Book (
 	id integer auto_increment primary key,
     title varchar(60) not null,
@@ -40,11 +19,34 @@ create table if not exists StudentInfo (
     numDays int not null,
     maxNumBooks int not null
 );
+
+create table if not exists Checkout (
+	studentId int not null,
+    bookId int not null,
+    startDate date not null,
+    dayReturned date default null,
+    dueBack date not null,
+    ddExtended boolean not null default false,
+    foreign key (studentId) references Student (id),
+    foreign key (bookId) references Book (id)
+);
+
+create table if not exists Reservation (
+	studentId int not null,
+    bookId int not null,
+    startDate date not null,
+    endDate date not null,
+    fulfilled boolean not null default false,
+    foreign key (studentId) references Student (id),
+    foreign key (bookId) references Book (id)
+);
+
 insert into StudentInfo(sType, sName, numDays, maxNumBooks) values ('u', "undergraduate", 14, 3);
 insert into StudentInfo(sType, sName, numDays, maxNumBooks) values ('g', "graduate", 7, 5);
 select * from StudentInfo;
 
 use group06;
+show tables;
 
 select * from Reservation;
 select * from Checkout;
@@ -59,6 +61,8 @@ drop table Checkout;
 drop table Reservation;
 drop table Student;
 drop table Book;
+
+
 
 # Test insert statements
 insert into Book (title, author, numCopies, category) values ("test title", "test author", 3, "fiction");

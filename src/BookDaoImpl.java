@@ -120,4 +120,103 @@ public class BookDaoImpl implements Dao<Book> {
     protected void finalize() throws Throwable {
         super.finalize();
     }
+
+    public Set<Book> searchByTitle(String title) {
+        Set<Book> books = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE title = ?");
+            preparedStatement.setString(1, title);
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return books;
+    }
+
+    public Set<Book> searchByAuthor(String author) {
+        Set<Book> books = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE author = ?");
+            preparedStatement.setString(1, author);
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return books;
+    }
+
+    public Set<Book> searchByCategory(String category) {
+        Set<Book> books = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE category = ?");
+            preparedStatement.setString(1, category);
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return books;
+    }
 }
