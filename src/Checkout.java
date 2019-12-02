@@ -15,6 +15,14 @@ public class Checkout {
         this.dueBack = dueBack;
     }
 
+    public String toString() {
+        String returned = " not";
+        if (returnDate != null) {
+            returned = "";
+        }
+        return "On " + startDate + ", student with ID " + studentId + " checked out book with ID " + bookId + ", which is due back on " + dueBack + ". This book has" + returned + " been returned.";
+    }
+
     public int getStudentId() {
         return studentId;
     }
@@ -27,8 +35,16 @@ public class Checkout {
         return startDate;
     }
 
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
     public Date getDueBack() {
         return dueBack;
+    }
+
+    public boolean isDdExtended() {
+        return ddExtended;
     }
 
     public void setReturnDate(Date returnDate) {

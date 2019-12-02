@@ -2,7 +2,7 @@ create table if not exists Checkout (
 	studentId int not null,
     bookId int not null,
     startDate date not null,
-    dayReturned date,
+    dayReturned date default null,
     dueBack date not null,
     ddExtended boolean not null default false,
     foreign key (studentId) references Student (id),
@@ -46,13 +46,19 @@ select * from StudentInfo;
 
 use group06;
 
-select count(*) from Reservation;
+select * from Reservation;
+select * from Checkout;
+select * from Student;
+select * from Book;
+
+insert into Checkout (studentId, bookId, startDate, dayReturned, dueBack) values (1, 1, "2019-12-01", null, "2019-12-15");
+insert into Reservation (studentId, bookId, startDate, endDate) values (1, 1, "2019-12-01", "2019-12-08");
 
 drop table StudentInfo;
-drop table Book;
-drop table Student;
-drop table Reservation;
 drop table Checkout;
+drop table Reservation;
+drop table Student;
+drop table Book;
 
 # Test insert statements
 insert into Book (title, author, numCopies, category) values ("test title", "test author", 3, "fiction");

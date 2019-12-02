@@ -14,6 +14,14 @@ public class Reservation {
         this.endDate = endDate;
     }
 
+    public String toString() {
+        String myFulfilled = " not";
+        if (fulfilled) {
+            myFulfilled = "";
+        }
+        return "On " + startDate + ", student with ID " + studentId + " reserved book with ID " + bookId + ". The reservation expires on " + endDate + ", and has" + myFulfilled + " been fulfilled.";
+    }
+
     public int getStudentId() {
         return studentId;
     }

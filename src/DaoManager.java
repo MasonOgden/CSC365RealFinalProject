@@ -90,11 +90,11 @@ public class DaoManager {
         return new StudentDaoImpl(this.getConnection());
     }
 
-    /*public Dao<Book> getReservationDao() throws SQLException {
+    public Dao<Reservation> getReservationDao() throws SQLException {
         return new ReservationDaoImpl(this.getConnection());
     }
 
-    public Dao<Book> getCheckoutDao() throws SQLException {
+    public Dao<Checkout> getCheckoutDao() throws SQLException {
         return new CheckoutDaoImpl(this.getConnection());
-    }*/
+    }
 }
