@@ -45,6 +45,39 @@ public class BookDaoImpl implements Dao<Book> {
         return book;
     }
 
+    public int getIdByTitle(String bookTitle) {
+        Integer bookId = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE title=?");
+            preparedStatement.setString(1, bookTitle);
+            resultSet = preparedStatement.executeQuery();
+            Set<Book> books = unpackResultSet(resultSet);
+            bookId = ((Book)books.toArray()[0]).getId();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return bookId;
+    }
+
     public Set<Book> getAll() {
         Set<Book> books = null;
         PreparedStatement preparedStatement = null;
@@ -107,6 +140,7 @@ public class BookDaoImpl implements Dao<Book> {
 
         while (rs.next()) {
             Book book = new Book(
+                    rs.getInt("id"),
                     rs.getString("title"),
                     rs.getString("author"),
                     rs.getInt("numCopies"),

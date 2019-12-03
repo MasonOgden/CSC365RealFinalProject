@@ -168,6 +168,26 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return true;
     }
 
+    public boolean return_book(BookDaoImpl bookDaoImpl, StudentDaoImpl studentDaoImpl,
+                               String firstName, String lastName, String bookTitle,
+                               Date dayReturned) {
+        int bookId = bookDaoImpl.getIdByTitle(bookTitle);
+        int studentId = studentDaoImpl.getStudentIdByName(firstName, lastName);
+        try {
+            PreparedStatement preparedStatement = this.conn.prepareStatement(
+                    "UPDATE Checkout SET dayReturned=? WHERE bookId = ? AND studentId = ?");
+            preparedStatement.setDate(1, dayReturned);
+            preparedStatement.setInt(2, bookId);
+            preparedStatement.setInt(3, studentId);
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public boolean delete(Checkout object) {
         return false;
     }
