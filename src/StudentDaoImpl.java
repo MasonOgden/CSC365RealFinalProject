@@ -17,7 +17,7 @@ public class StudentDaoImpl implements Dao<Student> {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE id=?");
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Student WHERE id=?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             Set<Student> students = unpackResultSet(resultSet);
@@ -39,6 +39,36 @@ public class StudentDaoImpl implements Dao<Student> {
             }
         }
         return student;
+    }
+
+    public int getStudentIdByName(String firstName, String lastName) {
+        Integer studentId = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Student WHERE firstName=? AND lastName = ?");
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            resultSet = preparedStatement.executeQuery();
+            Set<Student> students = unpackResultSet(resultSet);
+            studentId = ((Student) students.toArray()[0]).getId();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null)
+                    preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return studentId;
     }
 
     public Set<Student> getAll() {

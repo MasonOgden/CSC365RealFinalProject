@@ -114,15 +114,29 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
     }
 
     public boolean insert (Checkout object) {
-        return false;
+        try {
+            PreparedStatement preparedStatement = this.conn.prepareStatement(
+                    "insert into Checkout (studentId, bookId, startDate, dayReturned, dueBack) values (?, ?, ?, null, ?)");
+            preparedStatement.setInt(1, object.getStudentId());
+            preparedStatement.setInt(2, object.getBookId());
+            preparedStatement.setDate(3, (Date) object.getStartDate());
+            preparedStatement.setDate(3, (Date) object.getDueBack());
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
+    // Also, there's another problem: there's not really a primary key for Checkout
     public boolean extendReturnDate(int studentId, int bookId, int numDays) {
         // This method needs to take into account whether someone else has reserved it already.
         // Can't extend a checkout on a book if someone else has a reservation for it. Need to implement that.
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "UPDATE Checkout SET dueBack = DATE_ADD(dueBack, INTERVAL ? DAY), ddExtended = true WHERE studentId=? AND bookId = ?");
+                    "UPDATE Checkout SET dueBack = DATE_ADD(dueBack, INTERVAL ? DAY), ddExtended = 1 WHERE studentId=? AND bookId = ?;");
             preparedStatement.setInt(1, numDays);
             preparedStatement.setInt(2, studentId);
             preparedStatement.setInt(3, bookId);
