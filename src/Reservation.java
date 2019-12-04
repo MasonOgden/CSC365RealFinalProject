@@ -3,13 +3,15 @@ import java.util.Date;
 public class Reservation {
     private int studentId;
     private int bookId;
+    private int copyNum;
     private Date startDate;
     private Date endDate;
     private boolean fulfilled = false;
 
-    public Reservation(int studentId, int bookId, Date startDate, Date endDate) {
+    public Reservation(int studentId, int bookId, int copyNum, Date startDate, Date endDate) {
         this.studentId = studentId;
         this.bookId = bookId;
+        this.copyNum = copyNum;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -19,7 +21,10 @@ public class Reservation {
         if (fulfilled) {
             myFulfilled = "";
         }
-        return "On " + startDate + ", student with ID " + studentId + " reserved book with ID " + bookId + ". The reservation expires on " + endDate + ", and has" + myFulfilled + " been fulfilled.";
+        return "On " + startDate +
+                ", student with ID " + studentId + " reserved book with ID "
+                + bookId + ", copy number " + copyNum + ". The reservation expires on " + endDate +
+                ", and has" + myFulfilled + " been fulfilled.";
     }
 
     public int getStudentId() {
@@ -28,6 +33,9 @@ public class Reservation {
 
     public int getBookId() {
         return bookId;
+    }
+    public int getCopyNum() {
+        return copyNum;
     }
 
     public Date getStartDate() {

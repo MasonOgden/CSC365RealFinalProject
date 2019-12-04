@@ -13,12 +13,51 @@ public class BookDaoImpl implements Dao<Book> {
     }
 
     public Book getById(int id) {
-        Book book = null;
+        return null;
+    }
+
+    public Set<Book> getByBookId(int id) {
+        // This is gonna return 3 books, cause id is no longer unique.
+        Set<Book> books = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE id=?");
             preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return books;
+    }
+
+    public Book getByIdAndCopy(int id, int copyNum) {
+        // This is gonna return 1 book
+        Book book = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE id=? AND copyNum = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, copyNum);
             resultSet = preparedStatement.executeQuery();
             Set<Book> books = unpackResultSet(resultSet);
             book = (Book)books.toArray()[0];
@@ -117,11 +156,12 @@ public class BookDaoImpl implements Dao<Book> {
     public boolean update(Book object) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "UPDATE Book SET title=?, author=?, num_copies=?, category=? WHERE id=?");
+                    "UPDATE Book SET title=?, author=?, category=? WHERE bookId=? AND copyNum = ?");
             preparedStatement.setString(1, object.getTitle());
             preparedStatement.setString(2, object.getAuthor());
-            preparedStatement.setInt(3, object.getNumCopies());
-            preparedStatement.setString(4, object.getCategory());
+            preparedStatement.setString(3, object.getCategory());
+            preparedStatement.setInt(4, object.getId());
+            preparedStatement.setInt(5, object.getCopyNum());
             preparedStatement.execute();
         }
         catch (SQLException e) {
@@ -141,9 +181,9 @@ public class BookDaoImpl implements Dao<Book> {
         while (rs.next()) {
             Book book = new Book(
                     rs.getInt("id"),
+                    rs.getInt("copyNum"),
                     rs.getString("title"),
                     rs.getString("author"),
-                    rs.getInt("numCopies"),
                     rs.getString("category")
             );
             books.add(book);

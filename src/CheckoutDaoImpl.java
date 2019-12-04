@@ -168,16 +168,13 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return true;
     }
 
-    public boolean return_book(BookDaoImpl bookDaoImpl, StudentDaoImpl studentDaoImpl,
-                               String firstName, String lastName, String bookTitle,
-                               Date dayReturned) {
-        int bookId = bookDaoImpl.getIdByTitle(bookTitle);
-        int studentId = studentDaoImpl.getStudentIdByName(firstName, lastName);
+    public boolean return_book(int studentId, int bookId, int copyNum, Date dayReturned) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "UPDATE Checkout SET dayReturned=? WHERE bookId = ? AND studentId = ?");
+                    "UPDATE Checkout SET dayReturned=? WHERE bookId = ? AND copyNum = ? AND studentId = ?");
             preparedStatement.setDate(1, dayReturned);
             preparedStatement.setInt(2, bookId);
+            preparedStatement.setInt(3, copyNum);
             preparedStatement.setInt(3, studentId);
             preparedStatement.execute();
         }
@@ -199,6 +196,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
             Checkout checkout = new Checkout(
                     rs.getInt("studentId"),
                     rs.getInt("bookId"),
+                    rs.getInt("copyNum"),
                     rs.getDate("startDate"),
                     rs.getDate("dueBack"),
                     rs.getBoolean("ddExtended")

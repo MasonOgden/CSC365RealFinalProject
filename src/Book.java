@@ -1,20 +1,20 @@
 public class Book {
     private int id;
+    private int copyNum;
     private String title;
     private String author;
-    private int numCopies;
     private String category;
 
-    public Book(int id, String title, String author, int num_copies, String category) {
+    public Book(int id, int copyNum, String title, String author, String category) {
         this.id = id;
+        this.copyNum = copyNum;
         this.title = title;
         this.author = author;
-        this.numCopies = num_copies;
         this.category = category;
     }
 
     public String toString() {
-        return "title: " + title + ", author: " + author + ", number of copies: " + numCopies + ", category: " + category;
+        return "title: " + title + ", author: " + author + ", copy number: " + copyNum + ", category: " + category;
     }
 
     public int getId() {
@@ -29,8 +29,8 @@ public class Book {
         return author;
     }
 
-    public int getNumCopies() {
-        return numCopies;
+    public int getCopyNum() {
+        return copyNum;
     }
 
     public String getCategory() {

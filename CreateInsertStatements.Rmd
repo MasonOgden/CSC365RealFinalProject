@@ -37,7 +37,7 @@ out_file <- file(
   open="wt")
   
 
-beginning <- "INSERT INTO Book (title, author, numCopies, category) VALUES (\""
+beginning <- "INSERT INTO Book (copyNum, title, author, numCopies, category) VALUES ("
 
 for (i in 1:nrow(my.data)) {
   title <- my.data[i, "title"]
@@ -45,9 +45,10 @@ for (i in 1:nrow(my.data)) {
   num_copies <- as.integer(my.data[i, "num_copies"])
   category <- my.data[i, "category"]
   
-  
-  line <- str_c(beginning, title, "\", \"", author, "\", ", num_copies, ", \"", category, "\");")
+  for (j in 1:num_copies) {
+  line <- str_c(beginning, j,", \"", title, "\", \"", author, "\", ", num_copies, ", \"", category, "\");")
   writeLines(line, out_file)
+  }
 }
 close(out_file, type="wt")
 ```

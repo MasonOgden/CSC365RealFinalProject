@@ -19,7 +19,7 @@ public class ReservationDaoImpl implements Dao<Reservation> {
         ResultSet resultSet = null;
 
         try {
-            preparedStatement = this.conn.prepareStatement("SELECT * FROM Reservation WHERE studentId = ? AND fulfilled = false");
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Reservation WHERE studentId = ? AND fulfilled = 0");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             reservations = unpackResultSet(resultSet);
@@ -85,11 +85,12 @@ public class ReservationDaoImpl implements Dao<Reservation> {
     public boolean update(Reservation object) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "UPDATE Reservation SET studentId=?, bookId=?, startDate=?, endDate=? WHERE id=?");
+                    "UPDATE Reservation SET studentId=?, bookId=?, copyNum = ? startDate=?, endDate=? WHERE id=?");
             preparedStatement.setInt(1, object.getStudentId());
             preparedStatement.setInt(2, object.getBookId());
-            preparedStatement.setDate(3, (Date) object.getStartDate());
-            preparedStatement.setDate(4, (Date) object.getEndDate());
+            preparedStatement.setInt(3, object.getCopyNum());
+            preparedStatement.setDate(4, (Date) object.getStartDate());
+            preparedStatement.setDate(5, (Date) object.getEndDate());
             preparedStatement.execute();
         }
         catch (SQLException e) {
@@ -110,6 +111,7 @@ public class ReservationDaoImpl implements Dao<Reservation> {
             Reservation reservation = new Reservation(
                     rs.getInt("studentId"),
                     rs.getInt("bookId"),
+                    rs.getInt("copyNum"),
                     rs.getDate("startDate"),
                     rs.getDate("endDate")
             );

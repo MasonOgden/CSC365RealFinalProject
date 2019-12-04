@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Set;
 
+// Maybe consider adding a "checkedOut" boolean to book to make EVERYTHING easier
+
 public class Main {
     public static void main(String[] args) {
         String credFile = args[0];
