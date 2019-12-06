@@ -12,11 +12,11 @@ import java.sql.*;
 @WebServlet(name = "TestServlet", urlPatterns = "/test")
 public class TestServlet extends HttpServlet {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String JDBC_DB_URL = "jdbc:mysql://csc365.toshikuboi.net:3306/cgallahu";
+    static final String JDBC_DB_URL = "jdbc:mysql://csc365.toshikuboi.net:3306/group06";
 
     // JDBC Database Credentials
-    static final String JDBC_USER = "cgallahu";
-    static final String JDBC_PASS = "014032898";
+    static final String JDBC_USER = "group06";
+    static final String JDBC_PASS = "Group06@csc365";
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection connObj = null;

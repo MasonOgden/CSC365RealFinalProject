@@ -1,0 +1,6 @@
+0:0:0:0:0:0:0:1 - - [06/Dec/2019:10:26:08 -0800] "GET /example/ HTTP/1.1" 200 424 http-bio-8080-exec-1 1103
+0:0:0:0:0:0:0:1 - - [06/Dec/2019:10:26:12 -0800] "GET /example/students HTTP/1.1" 200 868 http-bio-8080-exec-2 1664
+0:0:0:0:0:0:0:1 - - [06/Dec/2019:10:26:17 -0800] "GET /example/create_student HTTP/1.1" 404 995 http-bio-8080-exec-3 3
+0:0:0:0:0:0:0:1 - - [06/Dec/2019:10:26:21 -0800] "GET /example/edit_student?id=1 HTTP/1.1" 200 449 http-bio-8080-exec-4 338
+0:0:0:0:0:0:0:1 - - [06/Dec/2019:10:26:30 -0800] "POST /example/edit_student HTTP/1.1" 200 453 http-bio-8080-exec-5 60
+0:0:0:0:0:0:0:1 - - [06/Dec/2019:10:26:43 -0800] "GET /example/students HTTP/1.1" 200 872 http-bio-8080-exec-6 44
