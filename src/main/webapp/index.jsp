@@ -6,5 +6,7 @@
 <p><a href="students">Students</a></p>
 <p><a href="books">Books</a></p>
 <p><a href="checkout">Checkout</a></p>
+<p><a href="login">Login</a></p>
+<p><a href="login2">Login</a></p>
 </body>
 </html>
