@@ -1,5 +1,7 @@
 package edu.calpoly.csc365.example1.entity;
 
+
+// Customer class to be deleted later
 public class Customer {
   private Integer id;
   private String ssn;
