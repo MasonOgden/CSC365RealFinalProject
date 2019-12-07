@@ -11,7 +11,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
 
     public Checkout getById(int id) {
         return null;
-    }
+    } // Must be here to implement the interface, but we don't have an Id for Checkout
 
     // Returns all current checkouts of the student
     public Set<Checkout> getActiveByStudentId(int id) {
@@ -114,6 +114,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
     }
 
     public boolean insert (Checkout object) {
+        // This is what's used to 'check out' a book
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
                     "insert into Checkout (studentId, bookId, startDate, dayReturned, dueBack) values (?, ?, ?, null, ?)");
@@ -130,26 +131,33 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return true;
     }
 
-    // Also, there's another problem: there's not really a primary key for Checkout
-    public boolean extendReturnDate(int studentId, int bookId, int numDays) {
+    public boolean extendReturnDate(int studentId, int bookId, int copyNum, int numDays) {
         // This method needs to take into account whether someone else has reserved it already.
         // Can't extend a checkout on a book if someone else has a reservation for it. Need to implement that.
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "UPDATE Checkout SET dueBack = DATE_ADD(dueBack, INTERVAL ? DAY), ddExtended = 1 WHERE studentId=? AND bookId = ?;");
+                    "UPDATE Checkout SET dueBack = DATE_ADD(dueBack, INTERVAL ? DAY), ddExtended = 1 WHERE studentId=? AND bookId = ? AND copyNum = ?;");
             preparedStatement.setInt(1, numDays);
             preparedStatement.setInt(2, studentId);
             preparedStatement.setInt(3, bookId);
+            preparedStatement.setInt(4, copyNum);
             preparedStatement.execute();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        catch (SQLException e) { // If someone has reserved this book, my trigger will raise an error.
+            //System.out.println(e.getMessage());
+            if (e.getMessage().equals("Cannot extend because someone has a reservation on this book")) {
+                System.out.println(e.getMessage());
+            }
+            else {
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }
 
     public boolean update(Checkout object) {
+        // Need to fix this one
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
                     "UPDATE Checkout SET studentId=?, bookId=?, startDate=?, dayReturned=?, dueBack = ?, ddExtended = ? WHERE id=?");
@@ -168,7 +176,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return true;
     }
 
-    public boolean return_book(int studentId, int bookId, int copyNum, Date dayReturned) {
+    public boolean returnBook(int studentId, int bookId, int copyNum, Date dayReturned) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
                     "UPDATE Checkout SET dayReturned=? WHERE bookId = ? AND copyNum = ? AND studentId = ?");

@@ -113,7 +113,9 @@ public class ReservationDaoImpl implements Dao<Reservation> {
                     rs.getInt("bookId"),
                     rs.getInt("copyNum"),
                     rs.getDate("startDate"),
-                    rs.getDate("endDate")
+                    rs.getDate("endDate"),
+                    rs.getBoolean("fulfilled"),
+                    rs.getBoolean("expired")
             );
             reservations.add(reservation);
         }

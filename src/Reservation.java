@@ -1,3 +1,5 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Reservation {
@@ -7,24 +9,40 @@ public class Reservation {
     private Date startDate;
     private Date endDate;
     private boolean fulfilled = false;
+    private boolean expired = false;
 
-    public Reservation(int studentId, int bookId, int copyNum, Date startDate, Date endDate) {
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    Date currentDate = new Date();
+
+    public Reservation(int studentId, int bookId, int copyNum, Date startDate, Date endDate, boolean fulfilled, boolean expired) {
         this.studentId = studentId;
         this.bookId = bookId;
         this.copyNum = copyNum;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.fulfilled = fulfilled;
+        this.expired = expired;
     }
 
     public String toString() {
-        String myFulfilled = " not";
         if (fulfilled) {
-            myFulfilled = "";
+            return "On " + startDate +
+                    ", student with ID " + studentId + " reserved book with ID "
+                    + bookId + ", copy number " + copyNum + ". The reservation would have expired on " + endDate +
+                    ", but has already been fulfilled.";
         }
-        return "On " + startDate +
-                ", student with ID " + studentId + " reserved book with ID "
-                + bookId + ", copy number " + copyNum + ". The reservation expires on " + endDate +
-                ", and has" + myFulfilled + " been fulfilled.";
+        if (!fulfilled && (endDate.compareTo(currentDate) < 0)) { // If it hasn't been fulfilled and has expired
+            return "On " + startDate +
+                    ", student with ID " + studentId + " reserved book with ID "
+                    + bookId + ", copy number " + copyNum + ". The reservation expired on " + endDate +
+                    ", and wasn't fulfilled.";
+        }
+        else { // If it hasn't been fulfilled and hasn't expired (is current)
+            return "On " + startDate +
+                    ", student with ID " + studentId + " reserved book with ID "
+                    + bookId + ", copy number " + copyNum + ". The reservation will expire on " + endDate +
+                    ", and hasn't fulfilled.";
+        }
     }
 
     public int getStudentId() {

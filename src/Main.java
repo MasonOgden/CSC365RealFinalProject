@@ -2,6 +2,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
 
@@ -28,17 +31,24 @@ public class Main {
             ));
 
             // Printing out all books currently in the database
-            Dao<Book> bookDao = daoManager.getBookDao();
+            /*Dao<Book> bookDao = daoManager.getBookDao();
             Set<Book> books = bookDao.getAll();
             for (Book book : books) {
                 System.out.println(book);
-            }
+            }*/
 
             // Printing out all students currently in the database
-            Dao<Student> studentDao = daoManager.getStudentDao();
+            /*Dao<Student> studentDao = daoManager.getStudentDao();
             Set<Student> students = studentDao.getAll();
             for (Student student : students) {
                 System.out.println(student);
+            }*/
+
+            // Printing out all reservations currently in the database
+            Dao<Reservation> reservationDao = daoManager.getReservationDao();
+            Set<Reservation> reservations = reservationDao.getAll();
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation);
             }
 
             // Printing out all checkouts currently in the database
@@ -48,13 +58,7 @@ public class Main {
                 System.out.println(checkout);
             }
 
-            // Printing out all reservations currently in the database
-            Dao<Reservation> reservationDao = daoManager.getReservationDao();
-            Set<Reservation> reservations = reservationDao.getAll();
-            for (Reservation reservation : reservations) {
-                System.out.println(reservation);
-            }
-
+            ((CheckoutDaoImpl)checkoutDao).extendReturnDate(1, 1, 1, 5);
         }
         catch (IOException e) {
             e.printStackTrace();

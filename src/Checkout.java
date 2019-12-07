@@ -31,7 +31,7 @@ public class Checkout {
                 + studentId + " checked out book with ID "
                 + bookId + ", copy number " + copyNum + ", which is due back on "
                 + dueBack + ". This book has" + returned +
-                " been returned. The return date has"
+                " been returned. \n\tThe return date has"
                 + extended + " been extended";
     }
 
