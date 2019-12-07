@@ -90,7 +90,7 @@ public class BookDaoImpl implements Dao<Book>{
                     "INSERT INTO Book (title, author, numCopies, category) VALUES (?, ?, ?, ?)");
             preparedStatement.setString(1, obj.getTitle());
             preparedStatement.setString(2, obj.getAuthor());
-            preparedStatement.setInt(3, obj.getNumCopies());
+            preparedStatement.setInt(3, obj.getCopyNum());
             preparedStatement.setString(4, obj.getCategory());
             int numRows = preparedStatement.executeUpdate();
             if (numRows == 1) {
@@ -128,7 +128,7 @@ public class BookDaoImpl implements Dao<Book>{
                     "UPDATE Book SET title=?, author=?, num_copies=?, category=? WHERE id=?");
             preparedStatement.setString(1, obj.getTitle());
             preparedStatement.setString(2, obj.getAuthor());
-            preparedStatement.setInt(3, obj.getNumCopies());
+            preparedStatement.setInt(3, obj.getCopyNum());
             preparedStatement.setString(4, obj.getCategory());
             preparedStatement.setInt(5, obj.getId());
             preparedStatement.execute();
@@ -174,9 +174,9 @@ public class BookDaoImpl implements Dao<Book>{
         while (rs.next()) {
             Book book = new Book(
                     rs.getInt("id"),
+                    rs.getInt("copyNum"),
                     rs.getString("title"),
                     rs.getString("author"),
-                    rs.getInt("numCopies"),
                     rs.getString("category")
             );
             books.add(book);

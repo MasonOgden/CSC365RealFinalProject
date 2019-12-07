@@ -5,7 +5,7 @@
     <title>Books</title>
     <style>
         table {
-            font-family: fantasy, sans-serif;
+            font-family: bookman, sans-serif;
             border-collapse: collapse;
             width: 100%;
         }
@@ -26,11 +26,14 @@ Message:
 <p>${message}</p>
 <table>
     <thead>Books</thead>
-    <tr><th>id</th><th>name</th><th></th></tr>
+    <tr><th>ID</th><th>Number of Copies</th><th>Title</th><th>Author</th><th>Category</th><th></th></tr>
     <c:forEach items="${books}" var="book">
         <tr>
-            <td>${customer.id}</td>
-            <td>${customer.name}</td>
+            <td>${book.id}</td>
+            <td>${book.copyNum}</td>
+            <td>${book.title}</td>
+            <td>${book.author}</td>
+            <td>${book.category}</td>
             <td><a data-id="${book.id}" href="edit_book?id=${book.id}">Edit</a></td>
         </tr>
     </c:forEach>
