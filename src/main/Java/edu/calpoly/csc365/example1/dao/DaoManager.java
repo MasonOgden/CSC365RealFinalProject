@@ -2,6 +2,7 @@ package edu.calpoly.csc365.example1.dao;
 
 import edu.calpoly.csc365.example1.entity.Customer;
 import edu.calpoly.csc365.example1.entity.Student;
+import edu.calpoly.csc365.example1.entity.Book;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -81,15 +82,16 @@ public class DaoManager{
       }
     });
   }
-
   public Dao<Customer> getCustomerDao() throws SQLException {
     return new CustomerDaoImpl(this.getConnection());
   }
-
   public Dao<Student> getStudentDao() throws SQLException {
     return new StudentDaoImpl((this.getConnection()));
   }
   public UserDao getUserDao() throws SQLException {
     return new UserDaoImpl(this.getConnection());
+  }
+  public Dao<Book> getBookDao() throws SQLException {
+    return new BookDaoImpl(this.getConnection());
   }
 }
