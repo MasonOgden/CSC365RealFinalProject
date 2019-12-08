@@ -1,7 +1,6 @@
 package edu.calpoly.csc365.example1.dao;
 
 import edu.calpoly.csc365.example1.entity.Book;
-
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;

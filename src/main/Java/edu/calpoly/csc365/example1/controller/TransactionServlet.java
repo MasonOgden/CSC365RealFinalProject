@@ -30,9 +30,9 @@ public class TransactionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer customerId = Integer.parseInt(request.getParameter("cid"));
-        Integer cardNumber = Integer.parseInt(request.getParameter("card_number"));
-        Integer vendorId = Integer.parseInt(request.getParameter("vid"));
+        Integer customerId = Integer.parseInt(request.getParameter("customerId"));
+        Integer cardNumber = Integer.parseInt(request.getParameter("cardNumber"));
+        Integer vendorId = Integer.parseInt(request.getParameter("vendorId"));
         Date tdate = Date.valueOf(request.getParameter("date"));
         System.out.println(tdate);
         Double amount = Double.parseDouble(request.getParameter("amount"));

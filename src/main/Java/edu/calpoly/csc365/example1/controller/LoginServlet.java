@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
     if (authenticationService.authenticate(name, pass)) {
       Cookie loginCookie = AuthenticationService.createLoginCookie(name);
       response.addCookie(loginCookie);
-      response.sendRedirect("customers");
+      response.sendRedirect("students");
     } else {
       response.sendRedirect("login");
     }
