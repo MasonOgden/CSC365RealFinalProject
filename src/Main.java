@@ -15,6 +15,7 @@ public class Main {
         String credFile = args[0];
         Properties prop = new Properties();
         FileInputStream fis = null;
+        Date today = new Date();
         try {
             fis = new FileInputStream(credFile);
         }
@@ -45,20 +46,22 @@ public class Main {
             }*/
 
             // Printing out all reservations currently in the database
-            Dao<Reservation> reservationDao = daoManager.getReservationDao();
+            /*Dao<Reservation> reservationDao = daoManager.getReservationDao();
             Set<Reservation> reservations = reservationDao.getAll();
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
-            }
+            }*/
 
             // Printing out all checkouts currently in the database
             Dao<Checkout> checkoutDao = daoManager.getCheckoutDao();
-            Set<Checkout> checkouts = checkoutDao.getAll();
+            /*Set<Checkout> checkouts = checkoutDao.getAll();
             for (Checkout checkout : checkouts) {
                 System.out.println(checkout);
-            }
+            }*/
 
-            ((CheckoutDaoImpl)checkoutDao).extendReturnDate(1, 1, 1, 5);
+            //((CheckoutDaoImpl)checkoutDao).extendReturnDate(1, 1, 1, 5);
+
+            System.out.println(((CheckoutDaoImpl)checkoutDao).getPastDueBooks(today).size());
         }
         catch (IOException e) {
             e.printStackTrace();

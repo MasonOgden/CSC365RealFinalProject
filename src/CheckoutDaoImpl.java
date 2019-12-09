@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -156,6 +157,72 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return true;
     }
 
+    public Set<Book> getCurrentlyCheckedOutBooks() {
+        Set<Book> books = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("select bookId as id, Checkout.copyNum, title, author, category from Checkout join Book on dayReturned is null and Checkout.bookId = Book.id and Checkout.copyNum = Book.copyNum;");
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSetBook(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return books;
+    }
+
+    public Set<Book> getPastDueBooks(java.util.Date todaysDate) {
+        Set<Book> books = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String todayString = new SimpleDateFormat("yyyy-MM-dd").format(todaysDate);
+
+        try {
+            preparedStatement = this.conn.prepareStatement("select id, Checkout.copyNum, title, author, category from Checkout join Book on dueBack < ? and dayReturned is null and id = bookId and Checkout.copyNum = Book.copyNum;");
+            preparedStatement.setString(1, todayString);
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSetBook(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return books;
+    }
+
     public boolean update(Checkout object) {
         // Need to fix this one
         try {
@@ -212,6 +279,22 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
             checkouts.add(checkout);
         }
         return checkouts;
+    }
+
+    private Set<Book> unpackResultSetBook(ResultSet rs) throws SQLException {
+        Set<Book> books = new HashSet<Book>();
+
+        while (rs.next()) {
+            Book book = new Book(
+                    rs.getInt("id"),
+                    rs.getInt("copyNum"),
+                    rs.getString("title"),
+                    rs.getString("author"),
+                    rs.getString("category")
+            );
+            books.add(book);
+        }
+        return books;
     }
 
     protected void finalize() throws Throwable {
