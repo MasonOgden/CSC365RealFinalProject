@@ -6,7 +6,11 @@ div.form
 form
 {
     display: inline-block;
-    margin-left: 0px;
+    margin-left: auto;
     margin-right: auto;
     text-align: left;
+}
+.same-row
+{
+display:inline-block;
 }
