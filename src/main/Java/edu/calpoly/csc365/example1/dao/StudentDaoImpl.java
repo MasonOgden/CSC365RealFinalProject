@@ -47,7 +47,7 @@ public class StudentDaoImpl implements Dao<Student> {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = this.conn.prepareStatement("SELECT * FROM Student");
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Student ORDER BY id ASC");
             resultSet = preparedStatement.executeQuery();
             students = unpackResultSet(resultSet);
         }

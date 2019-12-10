@@ -9,14 +9,19 @@
 <html>
 <head>
     <title>Student Form</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style = "left-margin:auto; right-margin:auto;"><br>
+  <div class="form">
+  <h4 style="color:#8F2581; face=bookman; size=25;">Edit an entry in the Student table</h4>
   <form method="post" action="edit_student">
-      <input type="text" name="id" id="id" value="${student.id}" readonly="readonly">
-      <input type="text" name="firstName" id="firstName" value="${student.firstName}">
-      <input type="text" name="lastName" id="lastName" value="${student.lastName}">
-      <input type="text" name="studentType" id="studentType" value="${student.studentType}">
+      ID: <input type="text" name="id" id="id" value="${student.id}" readonly="readonly"><br><br>
+      First Name: <input type="text" name="firstName" id="firstName" value="${student.firstName}"><br><br>
+      Last Name: <input type="text" name="lastName" id="lastName" value="${student.lastName}"><br><br>
+      Ug or Gr: <input type="text" name="studentType" id="studentType" value="${student.studentType}"><br><br>
       <input type="submit">
   </form>
+  <p><a href="students">Back to Students table</a></p>
+</div>
 </body>
 </html>
