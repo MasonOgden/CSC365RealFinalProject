@@ -10,11 +10,12 @@
 <p style ="padding-left:70px;""><a href="books">Books</a></p>
 <p style ="padding-left:70px;"><a href="checkout">Checkout</a></p>
 <p style ="padding-left:70px;"><a href="reservations">Reservations</a></p>
-<p style ="padding-left:70px;"><a href="login">Login</a></p>
+<p style ="padding-left:70px;"><a href="login">Login</a></p><br>
 <p style ="padding-left:70px; display:inline;">Run Queries:</p>
 <p style ="padding-left:70px;"><a href="login">Checkout a book</a></p>
-<p style ="padding-left:70px;"><a href="login">Reserve a book</a></p>
+<p style ="padding-left:70px;"><a href="login">Return a book</a></p>
 <p style ="padding-left:70px;"><a href="login">Search for book</a></p>
+<p style ="padding-left:70px;"><a href="login">See Checkouts by Month</a></p>
 
 </body>
 </html>

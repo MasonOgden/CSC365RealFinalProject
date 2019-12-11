@@ -169,7 +169,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
             preparedStatement.setDate(3, (Date) object.getStartDate());
             preparedStatement.setDate(4, (Date) object.getReturnDate());
             preparedStatement.setDate(4, (Date) object.getDueBack());
-            preparedStatement.setBoolean(4, object.isDdExtended());
+            preparedStatement.setBoolean(4, object.getDdExtended());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

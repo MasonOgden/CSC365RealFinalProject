@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Transaction</title>
+    <title>Add a Student</title>
 </head>
 <body>
 <div style="width:30%;height:50%;margin:10% auto;padding: 10px;">
@@ -20,5 +20,6 @@
     <input type="submit">
 </form>
 </div>
+<p><a href="students">Back to Students table</a></p>
 </body>
 </html>
