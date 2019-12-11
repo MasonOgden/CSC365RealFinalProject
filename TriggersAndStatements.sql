@@ -85,7 +85,7 @@ CREATE TRIGGER `check_student_books_and_availability_reservation` BEFORE
                                    WHERE r.studentId = NEW.studentId
                                    AND r.fulfilled = false
                                    AND r.expired = false);
-		# Finding out how many copies of the book are available to be reserved
+		# Finding out if this copy has already been reserved
 		SET @isReserved = (SELECT count(*)
 						 FROM Reservation r
                          WHERE r.bookId = NEW.bookId
