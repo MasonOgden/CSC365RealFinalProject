@@ -89,25 +89,62 @@ truncate table Reservation;
 truncate table Student;
 truncate table Book;
 
-# Number of Checkouts of each book by month:
-select id, month, ifnull(numRes, 0) as numRes
-from
-(select distinct id from Book) as bookIds
-left join
-(select bookId, monthname(startDate) as month, count(*) as numRes
-from Checkout
-group by bookId, monthname(startDate)) as firstStep
-on bookIds.id = firstStep.bookId;
+select id, Checkout.copyNum, title, author, category from Checkout join Book on dueBack < '2019-12-09' and dayReturned is null and id = bookId and Checkout.copyNum = Book.copyNum;
 
-select * from
-(select bookId, count(*) as January
-from Checkout
-where month(startDate) = '1'
-group by bookId) as janCounts
-join
-(select bookId, count(*) as February
-from Checkout
-where month(startDate) = '2'
-group by bookId) as febCounts
-using (bookId);
+    
+create temporary table if not exists usages2 
+	select *, (January + February + March + April + May + June + July + 
+		     August + September + October + November + December) as bookTotal 
+	from (select bookId,
+		max( if(monthNum = 1, numCheckouts, 0)) as January,
+        max( if(monthNum = 2, numCheckouts, 0)) as February,
+        max( if(monthNum = 3, numCheckouts, 0)) as March,
+        max( if(monthNum = 4, numCheckouts, 0)) as April,
+        max( if(monthNum = 5, numCheckouts, 0)) as May,
+        max( if(monthNum = 6, numCheckouts, 0)) as June,
+        max( if(monthNum = 7, numCheckouts, 0)) as July,
+        max( if(monthNum = 8, numCheckouts, 0)) as August,
+        max( if(monthNum = 9, numCheckouts, 0)) as September,
+        max( if(monthNum = 10, numCheckouts, 0)) as October,
+        max( if(monthNum = 11, numCheckouts, 0)) as November,
+        max( if(monthNum = 12, numCheckouts, 0)) as December
+    from (select bookId, month(startDate) as monthNum, count(*) as numCheckouts from Checkout
+		  where year(startDate) = 2019
+		  group by bookId, month(startDate)) as bookMonthlyCheckoutCounts
+    group by bookId) as usages;
+    
+    
+select * from usages2;
+create temporary table if not exists usagesCopy select * from usages2;
 
+select sum(January) as januaryTotal,
+	   sum(February) as februaryTotal,
+       sum(March) as marchTotal,
+       sum(April) as aprilTotal,
+       sum(May) as mayTotal,
+       sum(June) as juneTotal,
+       sum(July) as julyTotal,
+       sum(August) as augustTotal,
+       sum(September) as septemberTotal,
+       sum(October) as octoberTotal,
+       sum(November) as novemberTotal,
+       sum(December) as decemberTotal
+    from usages2;
+    
+insert into usages2 (bookId, January, February, March, April, May, June, July, August, September, October,
+					 November, December) values 
+	(null,
+     (select sum(January) from usagesCopy),
+     (select sum(February) from usagesCopy),
+     (select sum(March) from usagesCopy), 
+     (select sum(April) from usagesCopy),
+     (select sum(May) from usagesCopy),
+     (select sum(June) from usagesCopy),
+     (select sum(July) from usagesCopy),
+     (select sum(August) from usageCopy),
+     (select sum(September) from usagesCopy),
+     (select sum(October) from usagesCopy),
+     (select sum(November) from usagesCopy),
+     (select sum(December) from usagesCopy)
+     );
+     

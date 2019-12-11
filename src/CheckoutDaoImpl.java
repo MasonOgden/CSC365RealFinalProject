@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CheckoutDaoImpl implements Dao<Checkout> {
@@ -260,6 +262,74 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return true;
     }
 
+    public Set<BookUsage> getUsageSummary(String year) {
+        Set<BookUsage> bookUsages = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("select *, (January + February + March + April + May + June + July + August + September + October + November + December) as bookTotal from (select bookId, max( if(monthNum = 1, numCheckouts, 0)) as January, max( if(monthNum = 2, numCheckouts, 0)) as February, max( if(monthNum = 3, numCheckouts, 0)) as March, max( if(monthNum = 4, numCheckouts, 0)) as April, max( if(monthNum = 5, numCheckouts, 0)) as May, max( if(monthNum = 6, numCheckouts, 0)) as June, max( if(monthNum = 7, numCheckouts, 0)) as July, max( if(monthNum = 8, numCheckouts, 0)) as August, max( if(monthNum = 9, numCheckouts, 0)) as September, max( if(monthNum = 10, numCheckouts, 0)) as October, max( if(monthNum = 11, numCheckouts, 0)) as November, max( if(monthNum = 12, numCheckouts, 0)) as December from (select bookId, month(startDate) as monthNum, count(*) as numCheckouts from Checkout where year(startDate) = ? group by bookId, month(startDate)) as bookMonthlyCheckoutCounts group by bookId) as usages");
+            preparedStatement.setString(1, year);
+            resultSet = preparedStatement.executeQuery();
+            //System.out.println("size of resultset: " + resultSet.getFetchSize());
+            bookUsages = unpackResultSetBookUsage(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return bookUsages;
+    }
+
+    public BookUsage getUsageSummaryColumnTotals(String year) {
+        BookUsage bookUsage = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = this.conn.prepareStatement("select 0 as bookId, sum(January) as januaryTotal, sum(February) as februaryTotal, sum(March) as marchTotal, sum(April) as aprilTotal, sum(May) as mayTotal, sum(June) as juneTotal, sum(July) as julyTotal, sum(August) as augustTotal, sum(September) as septemberTotal, sum(October) as octoberTotal, sum(November) as novemberTotal, sum(December) as decemberTotal, sum(booktotal) as overallTotal from (select *, (January + February + March + April + May + June + July + August + September + October + November + December) as bookTotal from (select bookId, max( if(monthNum = 1, numCheckouts, 0)) as January, max( if(monthNum = 2, numCheckouts, 0)) as February, max( if(monthNum = 3, numCheckouts, 0)) as March, max( if(monthNum = 4, numCheckouts, 0)) as April, max( if(monthNum = 5, numCheckouts, 0)) as May, max( if(monthNum = 6, numCheckouts, 0)) as June, max( if(monthNum = 7, numCheckouts, 0)) as July, max( if(monthNum = 8, numCheckouts, 0)) as August, max( if(monthNum = 9, numCheckouts, 0)) as September, max( if(monthNum = 10, numCheckouts, 0)) as October, max( if(monthNum = 11, numCheckouts, 0)) as November, max( if(monthNum = 12, numCheckouts, 0)) as December from (select bookId, month(startDate) as monthNum, count(*) as numCheckouts from Checkout where year(startDate) = ? group by bookId, month(startDate)) as bookMonthlyCheckoutCounts group by bookId) as usages) as usages2");
+            preparedStatement.setString(1, year);
+            resultSet = preparedStatement.executeQuery();
+            //System.out.println("size of resultset: " + resultSet.getFetchSize());
+            bookUsage = unpackColumnTotal(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return bookUsage;
+    }
+
     public boolean delete(Checkout object) {
         return false;
     }
@@ -297,8 +367,58 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return books;
     }
 
-    protected void finalize() throws Throwable {
-        super.finalize();
+    private Set<BookUsage> unpackResultSetBookUsage(ResultSet rs) throws SQLException {
+        Set<BookUsage> bookUsages= new HashSet<>();
+
+        while (rs.next()) {
+            BookUsage bookUsage = new BookUsage(
+                    String.valueOf(rs.getInt("bookId")),
+                    rs.getInt("January"),
+                    rs.getInt("February"),
+                    rs.getInt("March"),
+                    rs.getInt("April"),
+                    rs.getInt("May"),
+                    rs.getInt("June"),
+                    rs.getInt("July"),
+                    rs.getInt("August"),
+                    rs.getInt("September"),
+                    rs.getInt("October"),
+                    rs.getInt("November"),
+                    rs.getInt("December"),
+                    rs.getInt("bookTotal")
+            );
+            bookUsages.add(bookUsage);
+        }
+        return bookUsages;
     }
+
+    private BookUsage unpackColumnTotal(ResultSet rs) throws SQLException {
+        List<BookUsage> bookUsages= new ArrayList<>();
+
+        while (rs.next()) {
+            BookUsage bookUsage = new BookUsage(
+                    "Total",
+                    rs.getInt("januaryTotal"),
+                    rs.getInt("februaryTotal"),
+                    rs.getInt("marchTotal"),
+                    rs.getInt("aprilTotal"),
+                    rs.getInt("mayTotal"),
+                    rs.getInt("juneTotal"),
+                    rs.getInt("julyTotal"),
+                    rs.getInt("augustTotal"),
+                    rs.getInt("septemberTotal"),
+                    rs.getInt("octoberTotal"),
+                    rs.getInt("novemberTotal"),
+                    rs.getInt("decemberTotal"),
+                    rs.getInt("overallTotal")
+            );
+            bookUsages.add(bookUsage);
+        }
+        return bookUsages.get(0);
+    }
+
+    /*protected void finalize() throws Throwable {
+        super.finalize();
+    }*/
 
 }

@@ -1,0 +1,13 @@
+Written:
+1. Checkout a book: CheckoutDaoImpl.insert
+2. Return a book: CheckoutDaoImpl.returnBook
+3. Reserve a book: ReservationDaoImpl.insert
+4. List a student's current books: CheckoutDaoImpl.getActiveByStudentId()
+5. List a student's past checkouts: CheckoutDaoImpl.getInactiveByStudentId()
+6. Extend return date: CheckoutDaoImpl.extendReturnDate()
+7. Get list of all currently checked out books: CheckoutDaoImpl.getCurrentlyCheckedOutBooks()
+8. Get a list of a all past due books: CheckoutDaoImpl.getPastDueBooks()
+
+Need to be written:
+1. Serach for book by title, author, or category and display availabilities
+2. Month-by-month overview of usage for an entire year. 

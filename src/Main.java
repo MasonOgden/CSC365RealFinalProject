@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 // Maybe consider adding a "checkedOut" boolean to book to make EVERYTHING easier
 
@@ -54,14 +52,18 @@ public class Main {
 
             // Printing out all checkouts currently in the database
             Dao<Checkout> checkoutDao = daoManager.getCheckoutDao();
-            /*Set<Checkout> checkouts = checkoutDao.getAll();
-            for (Checkout checkout : checkouts) {
-                System.out.println(checkout);
-            }*/
+            Set<BookUsage> bookUsages = ((CheckoutDaoImpl)checkoutDao).getUsageSummary("2019");
+            System.out.println("bookId\t| January\t| February\t| March\t | April\t| May\t| June\t| July\t| August\t| September\t| October\t| November\t| December\t| total\t |");
+            Comparator<BookUsage> compByBookId = Comparator.comparing(BookUsage::getBookIdAsInt);
+            BookUsage[] usages = new BookUsage[bookUsages.size()];
+            usages = bookUsages.toArray(usages);
+            Arrays.sort(usages, compByBookId);
+            for (BookUsage bs : usages) {
+                System.out.println(bs);
+            }
 
-            //((CheckoutDaoImpl)checkoutDao).extendReturnDate(1, 1, 1, 5);
+            System.out.println(((CheckoutDaoImpl)checkoutDao).getUsageSummaryColumnTotals("2019"));
 
-            System.out.println(((CheckoutDaoImpl)checkoutDao).getPastDueBooks(today).size());
         }
         catch (IOException e) {
             e.printStackTrace();
