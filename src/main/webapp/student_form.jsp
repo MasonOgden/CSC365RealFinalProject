@@ -13,7 +13,7 @@
 </head>
 <body style = "left-margin:auto; right-margin:auto;"><br>
   <div class="form">
-  <h4 style="color:#8F2581; face=bookman; size=25;">Edit an entry in the Student table</h4>
+  <h4 style="color:#8F2581; face=bookman; size=25;">Edit an entry in the table</h4>
   <form method="post" action="edit_student">
       ID: <input type="text" name="id" id="id" value="${student.id}" readonly="readonly"><br><br>
       First Name: <input type="text" name="firstName" id="firstName" value="${student.firstName}"><br><br>
