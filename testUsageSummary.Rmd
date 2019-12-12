@@ -1,0 +1,63 @@
+---
+title: "TestUsageSummary"
+author: "Mason Ogden"
+date: "December 6, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages}
+library(tidyverse)
+library(RMySQL)
+library(lubridate)
+```
+
+
+```{r connect to database}
+mydb <- dbConnect(MySQL(), user='group06', password='Group06@csc365', dbname='group06', host='csc365.toshikuboi.net')
+```
+
+```{r get tables from database}
+rsStudentInfo <- dbSendQuery(mydb, "select * from StudentInfo")
+StudentInfo = fetch(rsStudentInfo, n=-1)
+
+rsBook <- dbSendQuery(mydb, "select * from Book")
+Book = fetch(rsBook, n=-1)
+
+rsStudent <- dbSendQuery(mydb, "select * from Student")
+Student = fetch(rsStudent, n=-1)
+
+rsCheckout <- dbSendQuery(mydb, "select * from Checkout")
+Checkout = fetch(rsCheckout, n=-1)
+
+rsReservation <- dbSendQuery(mydb, "select * from Reservation")
+Reservation = fetch(rsReservation, n=-1)
+```
+
+```{r get usage table}
+usages <- Checkout %>%
+  mutate(startDate = ymd(startDate),
+         dueBack = ymd(dueBack),
+         month = months(startDate)) %>%
+  group_by(bookId, month) %>%
+  tally() %>%
+  spread(key=month, value = n, fill=0) %>% 
+  select(bookId, January, February, March, April, May, June, July, August, September, October, November, December)
+```
+
+```{r row and col sums}
+colTotals <- colSums(usages[, 2:13])
+rowTotals <- rowSums(usages[, 2:13])
+usages$rowTotal <- rowTotals
+usages <- rbind(usages, colTotals)
+usages[14, 1] = "Total"
+usages[14,14] = sum(colTotals)
+```
+
+```{r write file out}
+write.csv(usages, file = "C:/Users/mogde/Desktop/Git Repositories/CSC365/CSC365RealFinalProject/usages.csv")
+```
+
