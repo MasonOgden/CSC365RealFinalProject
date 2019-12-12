@@ -1,3 +1,7 @@
+package edu.calpoly.csc365.example1.dao;
+
+import edu.calpoly.csc365.example1.entity.*;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -116,7 +120,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return checkouts;
     }
 
-    public boolean insert (Checkout object) {
+    public Integer insert (Checkout object) {
         // This is what's used to 'check out' a book
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
@@ -129,9 +133,9 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         }
         catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
-        return true;
+        return object.getStudentId();
     }
 
     public boolean extendReturnDate(int studentId, int bookId, int copyNum, int numDays) {
@@ -225,7 +229,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return books;
     }
 
-    public boolean update(Checkout object) {
+    public Integer update(Checkout object) {
         // Need to fix this one
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
@@ -235,14 +239,14 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
             preparedStatement.setDate(3, (Date) object.getStartDate());
             preparedStatement.setDate(4, (Date) object.getReturnDate());
             preparedStatement.setDate(4, (Date) object.getDueBack());
-            preparedStatement.setBoolean(4, object.isDdExtended());
+            preparedStatement.setBoolean(4, object.getDdExtended());
             preparedStatement.execute();
         }
         catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
-        return true;
+        return object.getBookId();
     }
 
     public boolean returnBook(int studentId, int bookId, int copyNum, Date dayReturned) {
@@ -330,8 +334,8 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return bookUsage;
     }
 
-    public boolean delete(Checkout object) {
-        return false;
+    public Integer delete(Checkout object) {
+        return -1;
     }
 
     private Set<Checkout> unpackResultSet(ResultSet rs) throws SQLException {

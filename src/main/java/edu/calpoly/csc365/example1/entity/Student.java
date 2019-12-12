@@ -1,6 +1,6 @@
 package edu.calpoly.csc365.example1.entity;
 
-public class Student {
+public class Student implements Comparable<Student>{
     private String studentType;
     private int id;
     //Not sure if we need these
@@ -59,5 +59,9 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int compareTo(Student s){
+        return this.id - s.id;
     }
 }

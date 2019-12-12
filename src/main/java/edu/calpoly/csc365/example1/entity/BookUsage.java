@@ -1,3 +1,5 @@
+package edu.calpoly.csc365.example1.entity;
+
 public class BookUsage {
     private String bookId;
     private int January;

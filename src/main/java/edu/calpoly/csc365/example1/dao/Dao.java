@@ -9,3 +9,4 @@ public interface Dao<T> {
   Integer update(T obj);
   Integer delete(T obj);
 }
+
