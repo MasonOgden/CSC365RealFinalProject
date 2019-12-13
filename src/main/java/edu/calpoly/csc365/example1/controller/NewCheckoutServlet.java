@@ -30,6 +30,7 @@ public class NewCheckoutServlet extends HttpServlet {
 
     // TODO: Finish the new checkout method
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String studentType = (request.getParameter("studentType"));
