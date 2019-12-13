@@ -97,4 +97,8 @@ public class DaoManager {
     public Dao<Checkout> getCheckoutDao() throws SQLException {
         return new CheckoutDaoImpl(this.getConnection());
     }
+
+    public Dao<StudentInfo> getStudentInfoDao() throws SQLException {
+        return new StudentInfoDaoImpl(this.getConnection());
+    }
 }

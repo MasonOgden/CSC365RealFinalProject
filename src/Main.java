@@ -53,8 +53,11 @@ public class Main {
             // Printing out all checkouts currently in the database
             Dao<Checkout> checkoutDao = daoManager.getCheckoutDao();
             Set<BookUsage> bookUsages = ((CheckoutDaoImpl)checkoutDao).getUsageSummary("2019");
+
             System.out.println("bookId\t| January\t| February\t| March\t | April\t| May\t| June\t| July\t| August\t| September\t| October\t| November\t| December\t| total\t |");
+
             Comparator<BookUsage> compByBookId = Comparator.comparing(BookUsage::getBookIdAsInt);
+
             BookUsage[] usages = new BookUsage[bookUsages.size()];
             usages = bookUsages.toArray(usages);
             Arrays.sort(usages, compByBookId);
@@ -63,6 +66,13 @@ public class Main {
             }
 
             System.out.println(((CheckoutDaoImpl)checkoutDao).getUsageSummaryColumnTotals("2019"));
+
+            Dao<StudentInfo> siDao = daoManager.getStudentInfoDao();
+            Set<StudentInfo> siSet = siDao.getAll();
+
+            for (StudentInfo si : siSet) {
+                System.out.println(si);
+            }
 
         }
         catch (IOException e) {

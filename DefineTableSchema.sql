@@ -30,7 +30,7 @@ create table if not exists Checkout (
     copyNum int not null,
     startDate date not null,
     dayReturned date default null,
-    dueBack date not null,
+    dueBack date not null, # This one needs to access StudentInfo and set dueBack accordingly
     ddExtended boolean not null default false,
     foreign key (studentId) references Student (id),
     foreign key (bookId, copyNum) references Book (id, copyNum)
