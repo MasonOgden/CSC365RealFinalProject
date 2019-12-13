@@ -47,6 +47,40 @@ public class BookDaoImpl implements Dao<Book>{
         return book;
     }
 
+    public Book getByIdAndCopy(int id, int copy) {
+        Book book = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Book WHERE id=? AND copyNum=?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, copy);
+            resultSet = preparedStatement.executeQuery();
+            Set<Book> books = unpackResultSet(resultSet);
+            book = (Book)books.toArray()[0];
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return book;
+    }
+
     @Override
     public Set<Book> getAll() {
         Set<Book> books = null;
@@ -178,11 +212,15 @@ public class BookDaoImpl implements Dao<Book>{
 
         try {
             if(!cat.equals("")) {
-                preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ? AND category = ?");
+                preparedStatement = this.conn.prepareStatement("SELECT id, b.copyNum as copyNum, title, author, category, CASE WHEN bookId IS NULL THEN 'Yes' ELSE 'No' END AS Available\n" +
+                        "\tfrom Book b LEFT JOIN Checkout c ON title LIKE ? AND author LIKE ? AND category = ? AND id = bookId AND b.copyNum = c.copyNum");
+                //preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ? AND category = ?");
                 preparedStatement.setString(3, cat);
             }
             else{
-                preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ?");
+                preparedStatement = this.conn.prepareStatement("SELECT id, b.copyNum as copyNum, title, author, category, CASE WHEN bookId IS NULL THEN 'Yes' ELSE 'No' END AS Available\n" +
+                        "\tfrom Book b LEFT JOIN Checkout c ON title LIKE ? AND author LIKE ? AND id = bookId AND b.copyNum = c.copyNum");
+                //preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ?");
             }
             preparedStatement.setString(1, "%" + title + "%");
             preparedStatement.setString(2, "%" + author + "%");

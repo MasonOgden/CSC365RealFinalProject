@@ -26,7 +26,7 @@ Message:
 <p>${message}</p>
 <table>
     <thead>Books</thead>
-    <tr><th>ID</th><th>Number of Copies</th><th>Title</th><th>Author</th><th>Category</th><th></th></tr>
+    <tr><th>ID</th><th>Copy ID</th><th>Title</th><th>Author</th><th>Category</th><th>Availability</th><th></th></tr>
     <c:forEach items="${books}" var="book">
         <tr>
             <td>${book.id}</td>
@@ -34,7 +34,7 @@ Message:
             <td>${book.title}</td>
             <td>${book.author}</td>
             <td>${book.category}</td>
-            <td><a data-id="${book.id}" href="edit_book?id=${book.id}">Edit</a></td>
+            <td><a data-id="${book.id}{book.copyNum}" href="reserve_book?id=${book.id}&copyNum=${book.copyNum}">Reserve</a></td>
         </tr>
     </c:forEach>
 </table>

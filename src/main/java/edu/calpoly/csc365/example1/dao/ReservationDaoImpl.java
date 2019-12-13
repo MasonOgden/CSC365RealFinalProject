@@ -81,21 +81,25 @@ public class ReservationDaoImpl implements Dao<Reservation> {
 
     public Integer insert (Reservation obj) {
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Integer id = null;
+        int numRows;
+
         try {
             preparedStatement = this.conn.prepareStatement(
-                    "INSERT INTO Reservation (studentId, bookId, copyNum, startDate, endDate, fulfilled, expired) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO Reservation (studentId, bookId, copyNum, startDate, fulfilled, expired) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, obj.getStudentId());
             preparedStatement.setInt(2, obj.getBookId());
             preparedStatement.setInt(3, obj.getCopyNum());
             preparedStatement.setDate(4, (Date)obj.getStartDate());
-            preparedStatement.setDate(5, (Date)obj.getEndDate());
-            preparedStatement.setInt(6, obj.getFulfilled() ? 1 : 0);
-            preparedStatement.setInt(7, obj.getExpired() ? 1 : 0);
-
+            preparedStatement.setInt(5, obj.getFulfilled() ? 1 : 0);
+            preparedStatement.setInt(6, obj.getExpired() ? 1 : 0);
+            numRows = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return 1;
         }
+        System.out.println("Inserted " + numRows);
         return 0;
     }
 
