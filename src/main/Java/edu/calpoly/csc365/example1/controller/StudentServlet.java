@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 @WebServlet(name = "StudentServlet", urlPatterns = "/students")
@@ -33,6 +35,8 @@ public class StudentServlet extends HttpServlet {
         } else {
             response.addCookie(loginCookie);
             Set<Student> students = studentsDao.getAll();
+            ArrayList<Student> studentsOrdered = new ArrayList<>(students);
+            Collections.sort(studentsOrdered);
             request.setAttribute("students", students);
             request.setAttribute("message", "Hello " + loginCookie.getValue());
             request.getRequestDispatcher("students.jsp").forward(request, response);

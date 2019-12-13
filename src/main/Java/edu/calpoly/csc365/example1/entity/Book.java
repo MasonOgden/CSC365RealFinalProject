@@ -1,6 +1,6 @@
 package edu.calpoly.csc365.example1.entity;
 
-public class Book {
+public class Book implements Comparable<Book>{
     private int id;
     private int copyNum;
     private String title;
@@ -37,5 +37,9 @@ public class Book {
 
     public String getCategory() {
         return category;
+    }
+
+    public int compareTo(Book b){
+        return this.id - b.id;
     }
 }

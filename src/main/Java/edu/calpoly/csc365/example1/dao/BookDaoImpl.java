@@ -1,6 +1,7 @@
 package edu.calpoly.csc365.example1.dao;
 
 import edu.calpoly.csc365.example1.entity.Book;
+
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -165,6 +166,50 @@ public class BookDaoImpl implements Dao<Book>{
             }
         }
         return numRows;
+    }
+
+    /* Searches for books based on partial title and/or author matches. Category has to be an exact match.
+        input for values should be "" if no searching is requested for that attribute
+     */
+    public Set<Book> searchBook(String title, String author, String cat){
+        Set<Book> books = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            if(!cat.equals("")) {
+                preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ? AND category = ?");
+                preparedStatement.setString(3, cat);
+            }
+            else{
+                preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ?");
+            }
+            preparedStatement.setString(1, "%" + title + "%");
+            preparedStatement.setString(2, "%" + author + "%");
+            resultSet = preparedStatement.executeQuery();
+            books = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return books;
+
     }
 
     private Set<Book> unpackResultSet(ResultSet rs) throws SQLException {

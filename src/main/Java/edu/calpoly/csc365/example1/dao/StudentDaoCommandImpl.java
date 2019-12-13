@@ -14,7 +14,6 @@ public class StudentDaoCommandImpl implements DaoCommand {
     @Override
     public Object execute(DaoManager daoManager) {
         Connection conn = null;
-        Student student = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Integer rowsAffected = 0;
@@ -35,6 +34,7 @@ public class StudentDaoCommandImpl implements DaoCommand {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+
             throw new RuntimeException("Error occurred during SQL execution!");
         }
         return student;
