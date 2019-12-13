@@ -1,6 +1,5 @@
 package edu.calpoly.csc365.example1.entity;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Date;
 
 public class Checkout {

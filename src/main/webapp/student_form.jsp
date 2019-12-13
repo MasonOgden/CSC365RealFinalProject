@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Student Form</title>
+    <title>Edit Student Entry</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body style = "left-margin:auto; right-margin:auto;"><br>
