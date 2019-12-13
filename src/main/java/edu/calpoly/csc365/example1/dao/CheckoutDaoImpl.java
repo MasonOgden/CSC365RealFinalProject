@@ -124,11 +124,13 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         // This is what's used to 'check out' a book
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
-                    "insert into Checkout (studentId, bookId, startDate, dayReturned, dueBack) values (?, ?, ?, null, ?)");
+                    "insert into Checkout (studentId, bookId, copyNum, startDate, dayReturned, dueBack, ddExtended) values (?, ?, ?, ?, null, ?, ?)");
             preparedStatement.setInt(1, object.getStudentId());
             preparedStatement.setInt(2, object.getBookId());
-            preparedStatement.setDate(3, (Date) object.getStartDate());
-            preparedStatement.setDate(3, (Date) object.getDueBack());
+            preparedStatement.setInt(3, object.getCopyNum());
+            preparedStatement.setDate(4, (Date) object.getStartDate());
+            preparedStatement.setDate(5, (Date) object.getDueBack());
+            preparedStatement.setInt(6, 0);
             preparedStatement.execute();
         }
         catch (SQLException e) {
