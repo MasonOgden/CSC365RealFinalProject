@@ -212,15 +212,15 @@ public class BookDaoImpl implements Dao<Book>{
 
         try {
             if(!cat.equals("")) {
-                preparedStatement = this.conn.prepareStatement("SELECT id, b.copyNum as copyNum, title, author, category, CASE WHEN bookId IS NULL THEN 'Yes' ELSE 'No' END AS Available\n" +
-                        "\tfrom Book b LEFT JOIN Checkout c ON title LIKE ? AND author LIKE ? AND category = ? AND id = bookId AND b.copyNum = c.copyNum");
-                //preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ? AND category = ?");
+                //preparedStatement = this.conn.prepareStatement("SELECT id, b.copyNum as copyNum, title, author, category, CASE WHEN bookId IS NULL THEN 'Yes' ELSE 'No' END AS Available\n" +
+                //        "\tfrom Book b LEFT JOIN Checkout c ON title LIKE ? AND author LIKE ? AND category = ? AND id = bookId AND b.copyNum = c.copyNum");
+                preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ? AND category = ?");
                 preparedStatement.setString(3, cat);
             }
             else{
-                preparedStatement = this.conn.prepareStatement("SELECT id, b.copyNum as copyNum, title, author, category, CASE WHEN bookId IS NULL THEN 'Yes' ELSE 'No' END AS Available\n" +
-                        "\tfrom Book b LEFT JOIN Checkout c ON title LIKE ? AND author LIKE ? AND id = bookId AND b.copyNum = c.copyNum");
-                //preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ?");
+                //preparedStatement = this.conn.prepareStatement("SELECT id, b.copyNum as copyNum, title, author, category, CASE WHEN bookId IS NULL THEN 'Yes' ELSE 'No' END AS Available\n" +
+                //        "\tfrom Book b LEFT JOIN Checkout c ON title LIKE ? AND author LIKE ? AND id = bookId AND b.copyNum = c.copyNum");
+                preparedStatement = this.conn.prepareStatement("SELECT * from Book WHERE title LIKE ? AND author LIKE ?");
             }
             preparedStatement.setString(1, "%" + title + "%");
             preparedStatement.setString(2, "%" + author + "%");
