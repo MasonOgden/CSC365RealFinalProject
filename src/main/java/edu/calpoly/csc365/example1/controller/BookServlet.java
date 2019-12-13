@@ -39,9 +39,6 @@ public class BookServlet extends HttpServlet {
         } else {
             response.addCookie(loginCookie);
             Set<Book> books = booksDao.getAll();
-            //Set<Book> searchBooks = booksDaoImpl.searchBook("bert", "", "");
-            //ArrayList<Book> booksOrdered = new ArrayList<>(books);
-            //Collections.sort(booksOrdered);
             request.setAttribute("books", books);
             request.setAttribute("message", "Hello " + loginCookie.getValue());
             request.getRequestDispatcher("books.jsp").forward(request, response);

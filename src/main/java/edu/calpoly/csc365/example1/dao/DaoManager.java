@@ -1,6 +1,5 @@
 package edu.calpoly.csc365.example1.dao;
 
-import edu.calpoly.csc365.example1.entity.Customer;
 import edu.calpoly.csc365.example1.entity.Student;
 import edu.calpoly.csc365.example1.entity.Book;
 import edu.calpoly.csc365.example1.entity.Checkout;
@@ -84,9 +83,8 @@ public class DaoManager{
       }
     });
   }
-  public Dao<Customer> getCustomerDao() throws SQLException {
-    return new CustomerDaoImpl(this.getConnection());
-  }
+
+
   public Dao<Student> getStudentDao() throws SQLException {
     return new StudentDaoImpl((this.getConnection()));
   }
