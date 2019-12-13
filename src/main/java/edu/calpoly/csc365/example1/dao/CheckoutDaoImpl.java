@@ -239,9 +239,9 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
             preparedStatement.setInt(1, object.getStudentId());
             preparedStatement.setInt(2, object.getBookId());
             preparedStatement.setDate(3, (Date) object.getStartDate());
-            preparedStatement.setDate(4, (Date) object.getReturnDate());
-            preparedStatement.setDate(4, (Date) object.getDueBack());
-            preparedStatement.setBoolean(4, object.getDdExtended());
+            preparedStatement.setDate(5, (Date) object.getReturnDate());
+            preparedStatement.setDate(6, (Date) object.getDueBack());
+            preparedStatement.setBoolean(7, object.getDdExtended());
             preparedStatement.execute();
         }
         catch (SQLException e) {
@@ -251,14 +251,15 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return object.getBookId();
     }
 
-    public boolean returnBook(int studentId, int bookId, int copyNum, Date dayReturned) {
+    public boolean returnBook(int studentId, int bookId, int copyNum, Date dayReturned, String dateString) {
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(
                     "UPDATE Checkout SET dayReturned=? WHERE bookId = ? AND copyNum = ? AND studentId = ?");
-            preparedStatement.setDate(1, dayReturned);
+            //preparedStatement.setDate(1, dayReturned);
+            preparedStatement.setString(1, dateString);
             preparedStatement.setInt(2, bookId);
             preparedStatement.setInt(3, copyNum);
-            preparedStatement.setInt(3, studentId);
+            preparedStatement.setInt(4, studentId);
             preparedStatement.execute();
         }
         catch (SQLException e) {
@@ -349,6 +350,7 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
                     rs.getInt("bookId"),
                     rs.getInt("copyNum"),
                     rs.getDate("startDate"),
+                    rs.getDate("dayReturned"),
                     rs.getDate("dueBack"),
                     rs.getBoolean("ddExtended")
             );

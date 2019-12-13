@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Set;
 
@@ -38,9 +41,16 @@ public class StudentBooksServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        //request.setAttribute("student", student);
+
+        Set<Checkout> checkouts;
+        if(request.getParameter("current").equals("T")){
+            checkouts = checkoutDao.getActiveByStudentId(id);
+        }
+        else{
+            checkouts = checkoutDao.getInactiveByStudentId(id);
+        }
         Set<Checkout> activeCheckouts = checkoutDao.getActiveByStudentId(id);
-        request.setAttribute("checkouts", activeCheckouts);
+        request.setAttribute("checkouts", checkouts);
         request.getRequestDispatcher("student_books.jsp").forward(request, response);
     }
 
@@ -48,12 +58,16 @@ public class StudentBooksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie loginCookie = AuthenticationService.getLoginCookie(request);
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        Student student = (Student)request.getAttribute("student");
-        Set<Checkout> activeCheckouts = checkoutDao.getActiveByStudentId(student.getId());
-        request.setAttribute("checkouts", activeCheckouts);
+        int studentId = Integer.parseInt(request.getParameter("studentId"));
+        int bookId = Integer.parseInt(request.getParameter("bookId"));
+        int copyNum = Integer.parseInt(request.getParameter("copyNum"));
 
-        request.setAttribute("message", "Hello " + loginCookie.getValue());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+
+        checkoutDao.returnBook(studentId,bookId, copyNum, null, date);
         request.getRequestDispatcher("student_books.jsp").forward(request, response);
+
     }
 }

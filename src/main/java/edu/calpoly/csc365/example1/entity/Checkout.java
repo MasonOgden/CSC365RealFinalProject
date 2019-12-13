@@ -12,11 +12,12 @@ public class Checkout {
     private Date dueBack;
     private boolean ddExtended = false;
 
-    public Checkout(int studentId, int bookId, int copyNum, Date startDate, Date dueBack, boolean ddExtended) {
+    public Checkout(int studentId, int bookId, int copyNum, Date startDate, Date returnDate, Date dueBack, boolean ddExtended) {
         this.studentId = studentId;
         this.bookId = bookId;
         this.copyNum = copyNum;
         this.startDate = startDate;
+        this.returnDate = returnDate;
         this.dueBack = dueBack;
         this.ddExtended = ddExtended;
     }

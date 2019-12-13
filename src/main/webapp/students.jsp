@@ -34,7 +34,8 @@ Message:
             <td>${student.lastName}</td>
             <td>${student.studentType}</td>
             <td><a data-id="${student.id}" href="edit_student?id=${student.id}">Edit</a></td>
-            <td><a data-id="${student.id}" href="student_books?id=${student.id}">Show Books Checked Out</a></td>
+            <td><a data-id="${student.id}" href="student_books?id=${student.id}&current=T">Show Books Checked Out</a></td>
+            <td><a data-id="${student.id}" href="student_books?id=${student.id}&current=F">Show Books Previously Checked Out</a></td>
         </tr>
     </c:forEach>
 </table>

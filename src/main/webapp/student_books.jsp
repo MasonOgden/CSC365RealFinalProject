@@ -37,7 +37,10 @@ Message:
             <td>${checkout.returnDate}</td>
             <td>${checkout.dueBack}</td>
             <td>${checkout.ddExtended}</td>
-            <td><a data-id="${book.id}{book.copyNum}" href="return_book?id=${book.id}&copyNum=${book.copyNum}">Return</a></td>
+            <td><form action="${pageContext.request.contextPath}/student_books?bookId=${checkout.bookId}&copyNum=${checkout.copyNum}&studentId=${checkout.studentId}" method="post">
+                <input type="submit" name="return" value="Return" />
+            </form>
+            </td>
         </tr>
     </c:forEach>
 </table>

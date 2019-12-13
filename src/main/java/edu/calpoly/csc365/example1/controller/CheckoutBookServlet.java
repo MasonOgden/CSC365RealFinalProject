@@ -55,7 +55,7 @@ public class CheckoutBookServlet extends HttpServlet {
         }
         String end = dateFormat.format(cal.getTime());
         java.sql.Date endDate = java.sql.Date.valueOf(end);
-        Checkout checkout = new Checkout(studentId, bookId, copyNum, startDate, endDate, false);
+        Checkout checkout = new Checkout(studentId, bookId, copyNum, startDate, null, endDate, false);
         this.checkoutDao.insert(checkout);
         request.setAttribute("checkout", checkout);
         request.getRequestDispatcher("checkout_book.jsp").forward(request, response);

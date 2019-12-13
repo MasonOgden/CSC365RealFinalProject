@@ -42,7 +42,7 @@ public class CheckoutNewServlet extends HttpServlet {
         Date returnDate = Date.valueOf(request.getParameter("returnDate"));
         Date dueBack = Date.valueOf(request.getParameter("dueBack"));
         Boolean ddExtended = Boolean.valueOf(request.getParameter("ddExtended"));
-        Checkout checkout = new Checkout(0, 0, 0, null, null, false);
+        Checkout checkout = new Checkout(0, 0, 0, null, null,null, false);
         checkout.setStudentId(studentId);
         checkout.setBookId(bookId);
         checkout.setCopyNum(copyNum);
