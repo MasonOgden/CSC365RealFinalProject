@@ -22,8 +22,9 @@ public class StudentAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        //int id = Integer.parseInt(request.getParameter("id"));
         String firstName = request.getParameter("firstName");
+        int id = 1;
         String lastName = request.getParameter("lastName");
         String studentType = request.getParameter("studentType");
         Student student = new Student(studentType, id, firstName, lastName);

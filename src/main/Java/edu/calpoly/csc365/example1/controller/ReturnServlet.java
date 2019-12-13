@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
 
-@WebServlet(name = "CheckoutNewServlet", urlPatterns = "/create_checkout")
-public class CheckoutNewServlet extends HttpServlet {
+@WebServlet(name = "ReturnServlet", urlPatterns = "/returns")
+public class ReturnServlet extends HttpServlet {
     private DaoManager dm;
     private Dao<Checkout> checkoutDao;
 
-    public CheckoutNewServlet() throws Exception {
+    public ReturnServlet() throws Exception {
         dm = DaoManagerFactory.createDaoManager();
         checkoutDao = dm.getCheckoutDao();
     }
@@ -33,14 +33,14 @@ public class CheckoutNewServlet extends HttpServlet {
         Date dueBack = null;
         boolean ddExtended = false;
         Checkout checkout = new Checkout(studentId, bookId, copyNum, startDate, dayReturned, dueBack, ddExtended);
-        this.checkoutDao.insert(checkout);
+        this.checkoutDao.update(checkout);
         request.setAttribute("checkouts", checkout);
-        request.getRequestDispatcher("checkout_form.jsp").forward(request, response);
+        request.getRequestDispatcher("return.jsp").forward(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("checkout_form.jsp").forward(request, response);
+        request.getRequestDispatcher("return.jsp").forward(request, response);
     }
 
 }

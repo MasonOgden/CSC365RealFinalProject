@@ -8,4 +8,5 @@ public interface Dao<T> {
   Integer insert(T obj);
   Integer update(T obj);
   Integer delete(T obj);
+
 }

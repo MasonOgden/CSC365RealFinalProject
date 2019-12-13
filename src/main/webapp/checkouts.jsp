@@ -34,12 +34,12 @@ Message:
             <td>${checkout.bookId}</td>
             <td>${checkout.copyNum}</td>
             <td>${checkout.startDate}</td>
-            <td>${checkout.returnDate}</td>
+            <td>${checkout.dayReturned}</td>
             <td>${checkout.dueBack}</td>
             <td>${checkout.ddExtended}</td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="create_checkout">Add</a></p>
+<p><a href="create_checkout">Checkout a book</a></p>
 </body>
 </html>

@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     try {
-      preparedStatement = this.conn.prepareStatement("SELECT name FROM Users WHERE name = ? AND pass = ?");
+      preparedStatement = this.conn.prepareStatement("SELECT username FROM Users WHERE username = ? AND password = ?");
       preparedStatement.setString(1, name);
       preparedStatement.setString(2, pass);
       resultSet = preparedStatement.executeQuery();

@@ -13,9 +13,10 @@
 <p style ="padding-left:70px;"><a href="login">Login</a></p><br>
 <p style ="padding-left:70px; display:inline;">Run Queries:</p>
 <p style ="padding-left:70px;"><a href="create_checkout">Checkout a book</a></p>
-<p style ="padding-left:70px;"><a href="login">Return a book</a></p>
-<p style ="padding-left:70px;"><a href="search_book">Search for book</a></p>
-<p style ="padding-left:70px;"><a href="login">See Checkouts by Month</a></p>
+<p style ="padding-left:70px;"><a href="returns">Return a book</a></p>
+<p style ="padding-left:70px;"><a href="searchBooks">Search for book</a></p>
+<p style ="padding-left:70px;"><a href="checkoutByMonth">See Checkouts by Month</a></p>
+<p style ="padding-left:70px;"><a href="summary">Summary</a></p>
 <p style ="padding-left:70px;"><a href="libView">Librarian View</a></p>
 
 </body>

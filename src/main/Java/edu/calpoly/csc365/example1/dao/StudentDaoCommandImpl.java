@@ -34,7 +34,6 @@ public class StudentDaoCommandImpl implements DaoCommand {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
             throw new RuntimeException("Error occurred during SQL execution!");
         }
         return student;

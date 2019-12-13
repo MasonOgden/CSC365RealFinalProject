@@ -7,15 +7,16 @@ public class Checkout {
     private int bookId;
     private int copyNum;
     private Date startDate;
-    private Date returnDate = null;
+    private Date dayReturned = null;
     private Date dueBack;
     private boolean ddExtended = false;
 
-    public Checkout(int studentId, int bookId, int copyNum, Date startDate, Date dueBack, boolean ddExtended) {
+    public Checkout(int studentId, int bookId, int copyNum, Date startDate, Date dayReturned, Date dueBack, boolean ddExtended) {
         this.studentId = studentId;
         this.bookId = bookId;
         this.copyNum = copyNum;
         this.startDate = startDate;
+        this.dayReturned = dayReturned;
         this.dueBack = dueBack;
         this.ddExtended = ddExtended;
     }
@@ -23,7 +24,7 @@ public class Checkout {
     public String toString() {
         String returned = " not";
         String extended = " not";
-        if (returnDate != null) {
+        if (dayReturned != null) {
             returned = "";
         }
         if (ddExtended) {
@@ -69,12 +70,12 @@ public class Checkout {
         this.startDate = startDate;
     }
 
-    public Date getReturnDate(){
-        return returnDate;
+    public Date getDayReturned(){
+        return dayReturned;
     }
 
-    public void setReturnDate(Date returnDate){
-        this.returnDate = returnDate;
+    public void setDayReturned(Date dayReturned){
+        this.dayReturned= dayReturned;
     }
 
     public Date getDueBack() {

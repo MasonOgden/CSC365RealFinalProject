@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Books</title>
+    <title> Students</title>
     <style>
         table {
             font-family: bookman, sans-serif;
@@ -13,7 +13,7 @@
         td, th {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 8px;
+            padding: 20px;
         }
 
         tr:nth-child(even) {
@@ -25,18 +25,16 @@
 Message:
 <p>${message}</p>
 <table>
-    <thead>Books</thead>
-    <tr><th>ID</th><th>Number of Copies</th><th>Title</th><th>Author</th><th>Category</th></tr>
-    <c:forEach items="${books}" var="book">
+    <h5 style= "text-align:center;">Students</h5>
+    <tr><th>Book ID</th><th>Jan</th><th>Feb</th><th>Mar</th><th></th></tr>
+    <c:forEach items="${summaries}" var="summary">
         <tr>
-            <td>${book.id}</td>
-            <td>${book.copyNum}</td>
-            <td>${book.title}</td>
-            <td>${book.author}</td>
-            <td>${book.category}</td>
+            <td>${summary.bookId}</td>
+            <td>${summary.January}</td>
+            <td>${summary.Feburary}</td>
+            <td>${summary.March}</td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="create_book">Add</a></p>
 </body>
 </html>

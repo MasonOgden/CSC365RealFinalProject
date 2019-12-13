@@ -20,13 +20,13 @@ public class CheckoutDaoCommandImpl implements DaoCommand {
         try {
             conn = daoManager.getConnection();
             preparedStatement = conn.prepareStatement(
-                    "INSERT INTO Checkout (studentId, bookId, copyNum, startDate, returnDate, dueBack, ddExtended) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO Checkout (studentId, bookId, copyNum, startDate, dayReturned, dueBack, ddExtended) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, checkout.getStudentId());
             preparedStatement.setInt(2, checkout.getBookId());
             preparedStatement.setInt(3, checkout.getCopyNum());
             preparedStatement.setDate(4, checkout.getStartDate());
-            preparedStatement.setDate(5, checkout.getReturnDate());
+            preparedStatement.setDate(5, checkout.getDayReturned());
             preparedStatement.setDate(6, checkout.getDueBack());
             preparedStatement.setBoolean(7, checkout.getDdExtended());
             rowsAffected = preparedStatement.executeUpdate();
