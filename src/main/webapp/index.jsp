@@ -14,6 +14,7 @@
 <p style ="padding-left:70px;"><a href="reservations">Reservations</a></p>
 <p style ="padding-left:70px;"><a href="login">Login</a></p><br>
 <p style ="padding-left:70px; display:inline;">Run Queries:</p>
+<p style ="padding-left:70px;"><a href="select_year">Checkout Summary by Month</a></p>
 <p style ="padding-left:70px;"><a href="searchBooks">Search for book (You can reserve from here)</a></p>
 <p style ="padding-left:70px;"><a href="login">See Checkouts by Month</a></p>
 
