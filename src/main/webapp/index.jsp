@@ -17,7 +17,7 @@
 <p style ="padding-left:70px;"><a href="login">Return a book</a></p>
 <p style ="padding-left:70px;"><a href="searchBooks">Search for book</a></p>
 <p style ="padding-left:70px;"><a href="login">See Checkouts by Month</a></p>
-<p style ="padding-left:70px;"><a href="libView">Librarian View</a></p>
+<p style ="padding-left:70px;"><a href="past_due">See Past Due Checkouts (Librarian View)</a></p>
 
 </body>
 </html>

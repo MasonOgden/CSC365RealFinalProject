@@ -70,7 +70,14 @@ public class StudentBooksServlet extends HttpServlet {
             checkoutDao.returnBook(studentId, bookId, copyNum, null, date);
         }
         else{
-            checkoutDao.extendReturnDate(studentId, bookId, copyNum, 7);
+            Student student = studentDao.getById(studentId);
+            int extendBy;
+            if(student.getStudentType() == "u"){
+                extendBy = 7;
+            }
+            else
+                extendBy = 14;
+            checkoutDao.extendReturnDate(studentId, bookId, copyNum, extendBy);
         }
         request.getRequestDispatcher("student_books.jsp").forward(request, response);
 

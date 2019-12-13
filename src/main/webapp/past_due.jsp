@@ -25,18 +25,18 @@
 Message:
 <p>${message}</p>
 <table>
-    <thead>Reservations</thead>
+    <thead>Past Due Checkouts</thead>
     <tr><th>Student ID</th><th>Book ID</th><th>Copy Number</th><th>Start Date</th>
-    <th>End Date</th><th>Fulfilled</th><th>Expired</th></tr>
-    <c:forEach items="${reservations}" var="reservation">
+    <th>Return Date</th><th>Due Date</th><th>Due Date Extended</th></tr>
+    <c:forEach items="${checkouts}" var="checkout">
         <tr>
-            <td>${reservation.studentId}</td>
-            <td>${reservation.bookId}</td>
-            <td>${reservation.copyNum}</td>
-            <td>${reservation.startDate}</td>
-            <td>${reservation.endDate}</td>
-            <td>${reservation.fulfilled}</td>
-            <td>${reservation.expired}</td>
+            <td>${checkout.studentId}</td>
+            <td>${checkout.bookId}</td>
+            <td>${checkout.copyNum}</td>
+            <td>${checkout.startDate}</td>
+            <td>${checkout.returnDate}</td>
+            <td>${checkout.dueBack}</td>
+            <td>${checkout.ddExtended}</td>
         </tr>
     </c:forEach>
 </table>

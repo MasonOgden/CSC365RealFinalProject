@@ -231,6 +231,40 @@ public class CheckoutDaoImpl implements Dao<Checkout> {
         return books;
     }
 
+    public Set<Checkout> getPastDueCheckouts(java.util.Date todaysDate) {
+        Set<Checkout> checkouts = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String todayString = new SimpleDateFormat("yyyy-MM-dd").format(todaysDate);
+
+        try {
+            preparedStatement = this.conn.prepareStatement("SELECT * FROM Checkout WHERE dueBack < ? and dayReturned is null");
+            preparedStatement.setString(1, todayString);
+            resultSet = preparedStatement.executeQuery();
+            checkouts = unpackResultSet(resultSet);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null)
+                    resultSet.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return checkouts;
+    }
+
     public Integer update(Checkout object) {
         // Need to fix this one
         try {

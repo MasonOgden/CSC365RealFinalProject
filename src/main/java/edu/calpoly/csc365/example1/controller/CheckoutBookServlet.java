@@ -47,7 +47,7 @@ public class CheckoutBookServlet extends HttpServlet {
         int copyNum = Integer.parseInt(request.getParameter("copyId"));
         String start = dateFormat.format(cal.getTime());
         java.sql.Date startDate = java.sql.Date.valueOf(start);
-        if(studentDao.getById(studentId).getStudentType().equals("ug")) {
+        if(studentDao.getById(studentId).getStudentType().equals("u")) {
             cal.add(Calendar.DATE, 7);
         }
         else{
