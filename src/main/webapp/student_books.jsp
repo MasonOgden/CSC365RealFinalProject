@@ -37,10 +37,12 @@ Message:
             <td>${checkout.returnDate}</td>
             <td>${checkout.dueBack}</td>
             <td>${checkout.ddExtended}</td>
-            <td><form action="${pageContext.request.contextPath}/student_books?bookId=${checkout.bookId}&copyNum=${checkout.copyNum}&studentId=${checkout.studentId}" method="post">
+            <td><form action="${pageContext.request.contextPath}/student_books?bookId=${checkout.bookId}&copyNum=${checkout.copyNum}&studentId=${checkout.studentId}&extend=F" method="post">
                 <input type="submit" name="return" value="Return" />
-            </form>
-            </td>
+            </form> </td>
+            <td><form action="${pageContext.request.contextPath}/student_books?bookId=${checkout.bookId}&copyNum=${checkout.copyNum}&studentId=${checkout.studentId}&extend=T" method="post">
+                <input type="submit" name="return" value="Extend" />
+            </form> </td>
         </tr>
     </c:forEach>
 </table>

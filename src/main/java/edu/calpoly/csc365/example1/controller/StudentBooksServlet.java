@@ -66,7 +66,12 @@ public class StudentBooksServlet extends HttpServlet {
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
 
-        checkoutDao.returnBook(studentId,bookId, copyNum, null, date);
+        if(request.getParameter("extend").equals("F")) {
+            checkoutDao.returnBook(studentId, bookId, copyNum, null, date);
+        }
+        else{
+            checkoutDao.extendReturnDate(studentId, bookId, copyNum, 7);
+        }
         request.getRequestDispatcher("student_books.jsp").forward(request, response);
 
     }
