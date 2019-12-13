@@ -12,7 +12,7 @@
 </head>
 <body>
 <div style="width:30%;height:50%;margin:10% auto;padding: 10px;">
-<form method="post" action="search_books">
+<form method="post">
     <p><label for="Book Title">Book Title</label><br/><input type="text" name="bookTitle" id="bookTitle" value="" size="30"></p>
     <p><label for="Author">Author</label><br/><input type="text" name="author" id="author" value="" size="30"></p>
     <p><label for="Category">Category</label><br/><input type="text" name="category" id="category" value="" size="30"></p>

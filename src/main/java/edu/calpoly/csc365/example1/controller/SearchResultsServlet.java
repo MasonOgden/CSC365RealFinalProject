@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
-@WebServlet(name = "BookServlet", urlPatterns = "/books")
-public class BookServlet extends HttpServlet {
+@WebServlet(name = "SearchResultsServlet", urlPatterns = "/searchResults")
+public class SearchResultsServlet extends HttpServlet {
 
     private DaoManager dm;
     private Dao<Book> booksDao;
     private BookDaoImpl booksDaoImpl;
 
-    public BookServlet() throws Exception {
+    public SearchResultsServlet() throws Exception {
         dm = DaoManagerFactory.createDaoManager();
         booksDao = dm.getBookDao();
         booksDaoImpl = new BookDaoImpl(dm.getConnection());
@@ -39,12 +39,10 @@ public class BookServlet extends HttpServlet {
         } else {
             response.addCookie(loginCookie);
             Set<Book> books = booksDao.getAll();
-            //Set<Book> searchBooks = booksDaoImpl.searchBook("bert", "", "");
-            //ArrayList<Book> booksOrdered = new ArrayList<>(books);
-            //Collections.sort(booksOrdered);
+
             request.setAttribute("books", books);
             request.setAttribute("message", "Hello " + loginCookie.getValue());
-            request.getRequestDispatcher("books.jsp").forward(request, response);
+            request.getRequestDispatcher("search_results.jsp").forward(request, response);
         }
     }
 }
